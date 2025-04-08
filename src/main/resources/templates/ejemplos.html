@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <th:block th:replace="~{fragments/head :: header}"></th:block>
+    <title>Practica 2</title>
+</head>
+<script src="/js/script.js"></script>
+
+<body>
+    <header class="text-center bg-danger p-5 text-light">
+        <h1>Algoritmo ID3</h1>
+        <h4>Ingeniería del Conocimiento - UCM</h4>
+    </header>
+    <nav th:replace="~{fragments/navbar :: navbar}"></nav>
+    <div class="container text-center cuerpo">
+        <h2>Datos Climáticos</h2>
+        <a class="btn btn-primary" th:href="@{/ejecutar-todos}" href="/ejecutar-todos">Calcular todo</a>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Tiempo Exterior</th>
+                    <th>Temperatura</th>
+                    <th>Humedad</th>
+                    <th>Viento</th>
+                    <th>Salida esperada</th>
+                    <th></th>
+                    <th>Salida IDE3</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="fila,iter : ${datos}">
+                    <td th:text="${fila[0]}"></td>
+                    <td th:text="${fila[1]}"></td>
+                    <td th:text="${fila[2]}"></td>
+                    <td th:text="${fila[3]}"></td>
+                    <td th:text="${fila[4]}"></td>
+                    <td>
+                        <form th:action="@{/ejecutar-uno}" method="post">
+                            <input type="hidden" name="index" th:value="${iter.index}">
+                            <input type="hidden" name="tiempoExterior" th:value="${fila[0]}">
+                            <input type="hidden" name="temperatura" th:value="${fila[1]}">
+                            <input type="hidden" name="humedad" th:value="${fila[2]}">
+                            <input type="hidden" name="viento" th:value="${fila[3]}">
+                            <button type="submit" class="btn btn-primary">Calcular</button>
+                        </form>
+                    </td>
+                    <td>
+                        <span th:if="${indexResult != null and indexResult == iter.index and resultado == 'no'}" th:text="${resultado}" class="fw-bold text-danger"></span>
+                        <span th:if="${indexResult != null and indexResult == iter.index and resultado == 'si'}" th:text="${resultado}" class="fw-bold text-success"></span>
+                        <span th:if="${resultados != null and resultados[iter.index] != null and resultados[iter.index] == 'no'}" th:text="${resultados[iter.index]}" class="fw-bold text-danger"></span>
+                        <span th:if="${resultados != null and resultados[iter.index] != null and resultados[iter.index] == 'si'}" th:text="${resultados[iter.index]}" class="fw-bold text-success"></span>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <footer th:replace="~{fragments/footer :: foot}"></footer>
+</body>
+
+</html>

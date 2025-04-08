@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <th:block th:replace="~{fragments/head :: header}"></th:block>
+  <title>Practica 2</title>
+</head>
+<script src="/js/script.js"></script>
+
+<body>
+  <header class="text-center bg-danger p-5 text-light">
+    <h1>Algoritmo ID3</h1>
+    <h4>Ingeniería del Conocimiento - UCM</h4>
+  </header>
+  <nav th:replace="~{fragments/navbar :: navbar}"></nav>
+  <div class="container text-center cuerpo">
+    <H2>Bienvenid@ a nuestro simulador del Algoritmo ID3</H2>
+    <p>No te preocupes por el tiempo nosotros te lo calculamos.</p>
+    <p>Pulsa Iniciar Simulacion</p>
+    <a class="btn btn-danger" th:href="@{/simular}" href="/simular">Simular</a>
+    <br>
+    <br>
+    <br>
+    <p>O si prefieres ejecutar Ejemplos pulsa</p>
+    <a class="btn btn-primary" th:href="@{/ejemplos}" href="/ejemplos">Ejecutar ejemplos</a>
+    <div th:replace="~{fragments/grafo-ide3 :: nodoFragmento}"></div>
+  </div>
+  <footer th:replace="~{fragments/footer :: foot}"></footer>
+  <script>
+    function toggleChildren(button) {
+      let childrenList = button.nextElementSibling.nextElementSibling;
+      if (childrenList) {
+        childrenList.classList.toggle("show");
+        button.textContent = childrenList.classList.contains("show") ? "▼" : "▶";
+      }
+    }
+  </script>
+</body>
+
+</html>

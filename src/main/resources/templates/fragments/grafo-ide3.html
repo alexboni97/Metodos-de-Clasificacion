@@ -1,0 +1,98 @@
+<div th:fragment="nodoFragmento" class="container">
+    <div id="mynetwork"></div>
+
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+        var nodos = /*[[${nodos}]]*/[];
+        var aristas = /*[[${aristas}]]*/[];
+        // Personaliza los nodos visualmente
+        for (let i = 0; i < nodos.length; i++) {
+            let label = nodos[i].label.toLowerCase();
+
+            // Nodo raíz (primer nodo)
+            if (i === 0) {
+                nodos[i].color = { background: "#ffd966", border: "#ff9900" };
+                nodos[i].shape = "ellipse";
+                nodos[i].x = 0; nodos[i].y = 0; nodos[i].fixed = { x: true, y: true };
+            }
+            // Nodo hoja (decisión final)
+            else if (label === "si" || label === "no") {
+                nodos[i].color = {
+                    background: label === "si" ? "#d4edda" : "#f8d7da",
+                    border: label === "si" ? "#28a745" : "#dc3545"
+                };
+                nodos[i].font = { color: label === "si" ? "#155724" : "#721c24" };
+                nodos[i].shape = "box";
+                nodos[i].label += label === "si" ? " ✅" : " ❌";
+            }
+            // Nodo intermedio
+            else {
+                nodos[i].color = { background: "#ffffff", border: "#007bff" };
+                nodos[i].shape = "box";
+            }
+        }
+        // POSICIONES MANUALES (puedes pasarlas desde Java también)
+        nodos[0].x = 0; nodos[0].y = 0; nodos[0].fixed = { x: true, y: true };
+        nodos[1].x = 300; nodos[1].y = 150; nodos[1].fixed = { x: true, y: true };
+        nodos[2].x = 400; nodos[2].y = 250; nodos[2].fixed = { x: true, y: true };
+        nodos[3].x = 200; nodos[3].y = 250; nodos[3].fixed = { x: true, y: true };
+        nodos[4].x = -300; nodos[4].y = 150; nodos[4].fixed = { x: true, y: true };
+        nodos[5].x = -400; nodos[5].y = 250; nodos[5].fixed = { x: true, y: true };
+        nodos[6].x = -200; nodos[6].y = 250; nodos[6].fixed = { x: true, y: true };
+        nodos[7].x = 0; nodos[7].y = 250; nodos[7].fixed = { x: true, y: true };
+
+        var nodes = new vis.DataSet(nodos);
+        var edges = new vis.DataSet(aristas);
+
+        var container = document.getElementById('mynetwork');
+        var data = {
+            nodes: nodes,
+            edges: edges
+        };
+
+        var options = {
+            layout: {
+                hierarchical: false
+            },
+            nodes: {
+                shape: "box",
+                color: {
+                    background: "#ffffff",
+                    border: "#007bff",
+                    highlight: {
+                        background: "#cfe2ff",
+                        border: "#0056b3"
+                    }
+                },
+                font: {
+                    color: "#007bff",
+                    size: 16,
+                    face: "Segoe UI",
+                    bold: true
+                },
+                borderWidth: 2
+            },
+            edges: {
+                arrows: "to",
+                font: {
+                    align: "top",
+                    color: "#343a40",
+                    size: 14
+                },
+                color: {
+                    color: "#6c757d",
+                    highlight: "#495057"
+                }
+            },
+            interaction: {
+                hover: true,
+                zoomView: false,
+                dragView: false
+            },
+            physics: false
+        };
+
+        var network = new vis.Network(container, data, options);
+        /*]]>*/
+    </script>
+</div>

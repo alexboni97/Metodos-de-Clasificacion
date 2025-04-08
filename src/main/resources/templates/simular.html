@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <th:block th:replace="~{fragments/head :: header}"></th:block>
+    <title>Practica 2</title>
+  </head>
+  <script src="/js/script.js"></script>
+  <body>
+    <header class="text-center bg-danger p-5 text-light">
+        <h1>Algoritmo ID3</h1>
+        <h4>Ingeniería del Conocimiento - UCM</h4>
+    </header>
+    <nav th:replace="~{fragments/navbar :: navbar}"></nav>
+    <div class="container cuerpo">
+        <form action="/solucion" method="post">
+            <div class="row p-5">
+                <div class="col">
+                    <label for="tiempoExterior">TiempoExterior</label>
+                    <select
+                    class="form-select form-select-lg "
+                    name="tiempoExterior"
+                    id="tiempoExterior"
+                    required
+                >
+                    <option value="" >Selecciona 1</option>
+                    <option value="soleado">Soleado</option>
+                    <option value="lluvioso">Lluvioso</option>
+                    <option value="nublado">Nublado</option> 
+                </select>
+                </div>
+                <div class="col">
+                    <label for="temperatura" >Temperatura</label>
+                    <select
+                    class="form-select form-select-lg "
+                    name="temperatura"
+                    id="temperatura"
+                >
+                    <option value="" >Selecciona 1</option>
+                    <option value="caluroso">Caluroso</option>
+                    <option value="templado">Templado</option>
+                    <option value="frio">Frio</option> 
+                </select>
+                </div>
+                <div class="col">
+                    <label for="humedad">Humedad</label>
+                    <select
+                    class="form-select form-select-lg "
+                    name="humedad"
+                    id="humedad"
+                >
+                    <option value="" >Selecciona 1</option>
+                    <option value="alta">Alta</option>
+                    <option value="normal">Normal</option>
+                </select>
+                </div>
+                <div class="col">
+                    <label for="viento">Viento</label>
+                    <select
+                    class="form-select form-select-lg "
+                    name="viento"
+                    id="viento"
+                >
+                    <option value="" >Selecciona 1</option>
+                    <option value="verdad">Verdadero</option>
+                    <option value="falso">Falso</option>
+                </select>
+
+                </div>
+                <button type="submit" class="btn btn-primary col-1">Buscar Solucion</button>
+            </div>
+
+        </form>
+        <div class="container text-center mt-5">
+            <span th:if="${resultado != null and resultado=='si'}" th:text="${resultado}" class="rounded-pill bg-success  p-5 fw-bold " style="width:250px"></span>
+            <span th:if="${resultado != null and resultado=='no'}" th:text="${resultado}" class="rounded-pill bg-danger  p-5 fw-bold " style="width:250px"></span>
+            <span th:if="${resultado != null and resultado=='No hay solucion'}" th:text="${resultado}" class="rounded-pill bg-secondary  p-5 fw-bold " style="width:250px"></span>
+        </div>
+    </div>
+
+    <footer th:replace="~{fragments/footer :: foot}"></footer>
+  </body>
+</html>

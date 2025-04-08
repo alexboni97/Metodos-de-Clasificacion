@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org">
+<head>
+    <head>
+        <th:block th:replace="~{fragments/head :: header}"></th:block>
+        <title>Practica 2</title>
+      </head>
+      <script src="/js/script.js"></script>
+</head> 
+<body>
+    <header class="text-center bg-danger p-5 text-light">
+        <h1>Algoritmo ID3</h1>
+        <h4>Ingeniería del Conocimiento - UCM</h4>
+      </header>
+      <nav th:replace="~{fragments/navbar :: navbar}"></nav>
+    <br>
+    <div class="container cuerpo">
+        <div class="card-group">           
+
+            <div class="card ">
+                <img class="card-img-top" src="./images/alex.jpeg" alt="imagen de alex" width="200" height="400" style="object-fit: cover;"/>
+                <div class="card-body text-center">
+                    <h4 class="card-title">Alex Guillermo Bonilla Taco</h4>
+                    <p class="card-text">alexboni@ucm.es</p>
+                </div>
+            </div>
+            <div class="col-1"></div>
+            <div class="card">
+                <img class="card-img-top" src="./images/manu.jpg"alt="imagen de manu" width="200" height="400" style="object-fit: cover;"/>
+                <div class="card-body text-center">
+                    <h4 class="card-title">Manuel Villa Abajo</h4>
+                    <p class="card-text">manuvi03@ucm.es</p>
+                </div>
+            </div>
+            
+        </div>
+        
+    </div>
+    <footer th:replace="~{fragments/footer :: foot}"></footer>
+
+</body>
+</html>
