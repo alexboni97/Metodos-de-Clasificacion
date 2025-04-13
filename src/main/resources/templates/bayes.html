@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <th:block th:replace="~{fragments/head :: header}"></th:block>
+    <title>Práctica 3</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script
+      id="MathJax-script"
+      async
+      src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"
+    ></script>
+  </head>
+  <body>
+    <header class="text-center bg-danger p-5 text-light">
+      <h1>Métodos de Clasificación</h1>
+      <h4>Ingeniería del Conocimiento - UCM</h4>
+    </header>
+
+    <nav th:replace="~{fragments/navbar :: navbar}"></nav>
+
+    <div class="container mt-4 text-center cuerpo">
+      <h2>Método de ordenación de Bayes</h2>
+
+      <div class="table-responsive mt-4 d-flex justify-content-center">
+        <table class="table table-bordered text-center w-auto">
+          <thead class="table-secondary">
+            <tr>
+              <th></th>
+              <th>Iris-setosa</th>
+              <th>Iris-versicolor</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>
+                <button class="btn btn-primary" onclick="calcularMedias()">
+                  Calcular medias
+                </button>
+              </td>
+              <td id="media-setosa" class="latex-cell">-</td>
+              <td id="media-versicolor" class="latex-cell">-</td>
+            </tr>
+            <tr>
+              <td>
+                <button class="btn btn-success" onclick="calcularCovarianzas()">
+                  Calcular covarianzas
+                </button>
+              </td>
+              <td id="cov-setosa">-</td>
+              <td id="cov-versicolor">-</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <footer th:replace="~{fragments/footer :: foot}"></footer>
+    <script>
+      function calcularMedias() {
+        fetch("/mediaBayes")
+          .then((response) => response.json())
+          .then((data) => {
+            const setosa = data[0];
+            const versicolor = data[1];
+            const latexMatrix = (arr) => {
+              const row = arr.map((n) => n.toFixed(2)).join(" & ");
+              return `\\[ \\begin{bmatrix} ${row} \\end{bmatrix} \\]`;
+            };
+
+            document.getElementById("media-setosa").innerHTML =
+              latexMatrix(setosa);
+            document.getElementById("media-versicolor").innerHTML =
+              latexMatrix(versicolor);
+
+            if (window.MathJax) {
+              MathJax.typesetPromise();
+            }
+          })
+          .catch((error) => {
+            console.error("Error al obtener las medias:", error);
+          });
+      }
+    </script>
+  </body>
+</html>

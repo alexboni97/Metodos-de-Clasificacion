@@ -1,15 +1,14 @@
-async function enviarDatos() {
-    const entrada = [
-        document.getElementById("categoria1").value,
-        document.getElementById("categoria2").value
-    ];
-
-    const response = await fetch("/id3/predict", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(entrada)
-    });
-
-    const resultado = await response.text();
-    document.getElementById("resultado").innerText = "Predicción: " + resultado;
-}
+function calcularMedias() {
+    fetch("/mediaBayes")
+      .then(response => response.json())
+      .then(data => {
+        const setosaMedia = data.setosa.join(", ");
+        const versicolorMedia = data.versicolor.join(", ");
+        document.getElementById("media-setosa").textContent = setosaMedia;
+        document.getElementById("media-versicolor").textContent = versicolorMedia;
+      })
+      .catch(error => {
+        console.error("Error al obtener las medias:", error);
+      });
+  }
+  
