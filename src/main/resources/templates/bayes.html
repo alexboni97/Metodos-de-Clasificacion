@@ -43,7 +43,7 @@
             <tr>
               <td>
                 <button class="btn btn-success" onclick="calcularCovarianzas()">
-                  Calcular covarianzas
+                  Calcular matrizes de covarianzas
                 </button>
               </td>
               <td id="cov-setosa">-</td>
@@ -78,6 +78,39 @@
           })
           .catch((error) => {
             console.error("Error al obtener las medias:", error);
+          });
+      }
+
+      function calcularCovarianzas() {
+        fetch("/covarianzaBayes")
+          .then((response) => response.json())
+          .then((data) => {
+            // data es una lista de matrices (una para Setosa y otra para Versicolor)
+            const setosa = data[0]; // Primera matriz (4x4)
+            const versicolor = data[1]; // Segunda matriz (4x4)
+
+            const latexMatrix = (matrix) => {
+              const rows = matrix
+                .map((row) => row.map((n) => n.toFixed(2)).join(" & "))
+                .join(" \\\\ ");
+
+              return `\\[ \\begin{bmatrix} ${rows} \\end{bmatrix} \\]`;
+            };
+
+            document.getElementById("media-setosa").innerHTML =
+              latexMatrix(setosa);
+            document.getElementById("media-versicolor").innerHTML =
+              latexMatrix(versicolor);
+
+            if (window.MathJax) {
+              MathJax.typesetPromise();
+            }
+          })
+          .catch((error) => {
+            console.error(
+              "Error al obtener las matrices de covarianza:",
+              error
+            );
           });
       }
     </script>

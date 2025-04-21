@@ -1,7 +1,4 @@
 package com.ic.practica3.controllers;
-// package com.ic.practica2.models.Fichero;
-
-import java.io.IOException;
 
 import java.util.*;
 
@@ -9,7 +6,6 @@ import org.springframework.ui.Model;
 // ABRE UNA TERMINAL Y EJECUTA EL SIGUIENTE COMANDO: mvn spring-boot:run VE A
 // UN NAVEGADOR Y ESCRIBE LA SIGUIENTE DIRECCION: http://localhost:8080/
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.ic.practica3.models.*;
 
 import org.springframework.stereotype.Controller;
@@ -32,12 +28,12 @@ public class RootController {
         return solucion;
     }
 
-    @GetMapping("/mediaBayes")
+    @GetMapping("/covarianzaBayes")
     @ResponseBody
-    public List<List<Double>> calcularClasesPorBayes() {
-        List<List<Double>> solucion = new ArrayList<>();
-        solucion.add(by.calcularVarianza("Iris-setosa"));
-        solucion.add(by.calcularVarianza("Iris-versicolor"));
+    public List<List<List<Double>>> calcularClasesPorBayes() {
+        List<List<List<Double>>> solucion = new ArrayList<>();
+        solucion.add(by.calcularCovarianza("Iris-setosa"));
+        solucion.add(by.calcularCovarianza("Iris-versicolor"));
         return solucion;
     }
 

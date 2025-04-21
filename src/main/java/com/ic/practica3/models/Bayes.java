@@ -1,6 +1,8 @@
 package com.ic.practica3.models;
 
 import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class Bayes {
     private Map<String, List<Muestra>> datos;
@@ -32,30 +34,51 @@ public class Bayes {
         }
         return medias;
     }
-    /*
-     * TODO: Terminar esto para las clases de varianzas y tal
-     * public List<Double> calcularVarianza(String key) {
-     * List<Muestra> clase = datos.get(key);
-     * List<Double> varianzas = new ArrayList<>(Arrays.asList(0.0, 0.0, 0.0, 0.0));
-     * for (int j = 0; j < clase.size(); j++) {
-     * double aux1 = Math.pow(clase.get(j).getValor1() -
-     * medias_totales.get(key).get(0), 2) * 1 / clase.size();
-     * double aux2 = Math.pow(clase.get(j).getValor2() -
-     * medias_totales.get(key).get(1), 2) * 1 / clase.size();
-     * double aux3 = Math.pow(clase.get(j).getValor3() -
-     * medias_totales.get(key).get(2), 2) * 1 / clase.size();
-     * double aux4 = Math.pow(clase.get(j).getValor4() -
-     * medias_totales.get(key).get(3), 2) * 1 / clase.size();
-     * varianzas.set(0, aux1 + varianzas.get(0));
-     * varianzas.set(1, aux2 + varianzas.get(1));
-     * varianzas.set(2, aux3 + varianzas.get(2));
-     * varianzas.set(3, aux4 + varianzas.get(3));
-     * }
-     * varianzas_totales.put(key, varianzas);
-     * for (int i = 0; i < varianzas.size(); i++) {
-     * System.out.println("Varianza " + i + " de " + key + ": " + varianzas.get(i));
-     * }
-     * return varianzas;
-     * }
-     */
+
+    public List<List<Double>> calcularCovarianza(String key) {
+        List<Muestra> clase = datos.get(key);
+
+        // Lista de matrices que guardaremos para sumarlas entre ellas y devolver la
+        // matriz de covarianza solucion
+        List<List<ArrayList<Double>>> matriz = Stream
+                .generate(() -> Stream.generate(() -> new ArrayList<>(Collections.nCopies(4, 0.0)))
+                        .limit(4)
+                        .map(list -> (ArrayList<Double>) list) // Conversión explícita
+                        .collect(Collectors.toList()))
+                .limit(clase.size())
+                .collect(Collectors.toList());
+        // Matriz de Covarianza
+        List<List<Double>> solucion = Stream.generate(() -> new ArrayList<>(Collections.nCopies(4, 0.0)))
+                .limit(4)
+                .collect(Collectors.toList());
+
+        for (int j = 0; j < clase.size(); j++) {
+            double aux1 = clase.get(j).getValor1() - medias_totales.get(key).get(0);
+            double aux2 = clase.get(j).getValor2() - medias_totales.get(key).get(1);
+            double aux3 = clase.get(j).getValor3() - medias_totales.get(key).get(2);
+            double aux4 = clase.get(j).getValor4() - medias_totales.get(key).get(3);
+
+            List<Double> diferencias = Arrays.asList(aux1, aux2, aux3, aux4);
+            for (int i = 0; i < 4; i++) {
+                for (int k = 0; k < 4; k++) {
+                    matriz.get(j).get(i).set(k, diferencias.get(i) * diferencias.get(k));
+                }
+            }
+        }
+
+        // Sumar todas las matrices y dividir por el tamaño de la clase para obtener la
+        // covarianza
+        for (int i = 0; i < 4; i++) {
+            for (int k = 0; k < 4; k++) {
+                double suma = 0.0;
+                for (int j = 0; j < clase.size(); j++) {
+                    suma += matriz.get(j).get(i).get(k);
+                }
+                solucion.get(i).set(k, suma / clase.size());
+            }
+        }
+
+        return solucion;
+    }
+
 }
