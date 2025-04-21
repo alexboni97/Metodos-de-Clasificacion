@@ -97,9 +97,9 @@
               return `\\[ \\begin{bmatrix} ${rows} \\end{bmatrix} \\]`;
             };
 
-            document.getElementById("media-setosa").innerHTML =
+            document.getElementById("cov-setosa").innerHTML =
               latexMatrix(setosa);
-            document.getElementById("media-versicolor").innerHTML =
+            document.getElementById("cov-versicolor").innerHTML =
               latexMatrix(versicolor);
 
             if (window.MathJax) {
