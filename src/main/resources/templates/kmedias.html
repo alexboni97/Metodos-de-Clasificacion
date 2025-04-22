@@ -1,79 +1,88 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-  <head>
+<html xmlns:th="http://www.thymeleaf.org" data-theme="dark">
+
+<head>
     <th:block th:replace="~{fragments/head :: header}"></th:block>
-    <title>Practica 2</title>
-  </head>
-  <script src="/js/script.js"></script>
-  <body>
+    <title>Práctica 3</title>
+</head>
+<script src="/js/script.js"></script>
+
+<body>
     <div th:replace="~{fragments/header :: header}"></div>
     <nav th:replace="~{fragments/navbar :: navbar}"></nav>
     <div class="container cuerpo">
-        <form action="/solucion" method="post">
-            <div class="row p-5">
-                <div class="col">
-                    <label for="tiempoExterior">TiempoExterior</label>
-                    <select
-                    class="form-select form-select-lg "
-                    name="tiempoExterior"
-                    id="tiempoExterior"
-                    required
-                >
-                    <option value="" >Selecciona 1</option>
-                    <option value="soleado">Soleado</option>
-                    <option value="lluvioso">Lluvioso</option>
-                    <option value="nublado">Nublado</option> 
-                </select>
-                </div>
-                <div class="col">
-                    <label for="temperatura" >Temperatura</label>
-                    <select
-                    class="form-select form-select-lg "
-                    name="temperatura"
-                    id="temperatura"
-                >
-                    <option value="" >Selecciona 1</option>
-                    <option value="caluroso">Caluroso</option>
-                    <option value="templado">Templado</option>
-                    <option value="frio">Frio</option> 
-                </select>
-                </div>
-                <div class="col">
-                    <label for="humedad">Humedad</label>
-                    <select
-                    class="form-select form-select-lg "
-                    name="humedad"
-                    id="humedad"
-                >
-                    <option value="" >Selecciona 1</option>
-                    <option value="alta">Alta</option>
-                    <option value="normal">Normal</option>
-                </select>
-                </div>
-                <div class="col">
-                    <label for="viento">Viento</label>
-                    <select
-                    class="form-select form-select-lg "
-                    name="viento"
-                    id="viento"
-                >
-                    <option value="" >Selecciona 1</option>
-                    <option value="verdad">Verdadero</option>
-                    <option value="falso">Falso</option>
-                </select>
+        <div class="text-center">
+            <h4 class="font-semibold text-lg">Parámetros de inicialización:</h4>
+            <p style="text-align: center;">
+              \[
+              v =
+              \begin{bmatrix}
+              4.6 & 3.0 & 4.0 & 0.0 \\\\
+              6.8 & 3.4 & 4.6 & 0.7
+              \end{bmatrix}
+              \]
+          </p>
+            <p>
+              <strong>ε:</strong> 0.01 &nbsp;&nbsp;
+              <strong>b:</strong> 2 &nbsp;&nbsp;
+              
+            </p>
+          </div>
 
-                </div>
-                <button type="submit" class="btn btn-primary col-1">Buscar Solucion</button>
+        <form action="/clasificar-k-medias" method="post" class="mx-auto text-center justify-center">
+            <div class="flex mx-auto justify-center">
+                <label class="floating-label m-3">
+                    <input type="text" placeholder="Tolerancia = 0.01" class="input input-lg" />
+                    <span>Tolerancia</span>
+                </label>
+                <label class="floating-label m-3">
+                    <input type="text" placeholder="Peso exponencial = 2" class="input input-lg" />
+                    <span>Peso exponencial</span>
+                </label>
+
             </div>
+            <div class="flex justify-center">
+                <label class="floating-label m-3">
+                    <input type="text" placeholder="X1" class="input input-lg validator" required />
+                    <span>X1</span>
+                    <p class="validator-hint">Introduce valores numéricos</p>
+                </label>
+
+                <label class="floating-label m-3">
+                    <input type="double" placeholder="X2" class="input input-lg validator" required />
+                    <span>X2</span>
+                    <p class="validator-hint">Introduce valores numéricos</p>
+                </label>
+                <label class="floating-label m-3">
+                    <input type="text" placeholder="X3" class="input input-lg validator" required />
+                    <span>X3</span>
+                    <p class="validator-hint">Introduce valores numéricos</p>
+                </label>
+                <label class="floating-label m-3">
+                    <input type="text" placeholder="X4" class="input input-lg validator" required />
+                    <span>X4</span>
+                    <p class="validator-hint">Introduce valores numéricos</p>
+                </label>
+
+            </div>
+            <button type="submit" class="btn btn-primary col-1">Buscar Solucion</button>
 
         </form>
+        <div class="text-center mt-5">
+
+            <button type="button" class="btn btn-primary col-1">Calcular ejemplos por defecto</button>
+        </div>
         <div class="container text-center mt-5">
-            <span th:if="${resultado != null and resultado=='si'}" th:text="${resultado}" class="rounded-pill bg-success  p-5 fw-bold " style="width:250px"></span>
-            <span th:if="${resultado != null and resultado=='no'}" th:text="${resultado}" class="rounded-pill bg-danger  p-5 fw-bold " style="width:250px"></span>
-            <span th:if="${resultado != null and resultado=='No hay solucion'}" th:text="${resultado}" class="rounded-pill bg-secondary  p-5 fw-bold " style="width:250px"></span>
+            <span th:if="${resultado != null and resultado=='si'}" th:text="${resultado}"
+                class="rounded-pill bg-success  p-5 fw-bold " style="width:250px"></span>
+            <span th:if="${resultado != null and resultado=='no'}" th:text="${resultado}"
+                class="rounded-pill bg-danger  p-5 fw-bold " style="width:250px"></span>
+            <span th:if="${resultado != null and resultado=='No hay solucion'}" th:text="${resultado}"
+                class="rounded-pill bg-secondary  p-5 fw-bold " style="width:250px"></span>
         </div>
     </div>
 
     <footer th:replace="~{fragments/footer :: foot}"></footer>
-  </body>
+</body>
+
 </html>

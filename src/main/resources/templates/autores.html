@@ -1,49 +1,55 @@
 <!DOCTYPE html>
-<html xmlns:th="http://thymeleaf.org">
+<html xmlns:th="http://thymeleaf.org" data-theme="dark">
   <head>
-    <head>
-      <th:block th:replace="~{fragments/head :: header}"></th:block>
-      <title>Practica 3</title>
-    </head>
+    <th:block th:replace="~{fragments/head :: header}"></th:block>
+    <title>Práctica 3</title>
     <script src="/js/script.js"></script>
   </head>
-  <body>
+  <body class="flex flex-col min-h-screen">
+
+    <!-- Header + Navbar -->
     <div th:replace="~{fragments/header :: header}"></div>
     <nav th:replace="~{fragments/navbar :: navbar}"></nav>
-    <br />
-    <div class="container cuerpo">
-      <div class="card-group">
-        <div class="card">
-          <img
-            class="card-img-top"
-            src="./images/alex.jpeg"
-            alt="imagen de alex"
-            width="200"
-            height="400"
-            style="object-fit: cover"
-          />
-          <div class="card-body text-center">
-            <h4 class="card-title">Alex Guillermo Bonilla Taco</h4>
-            <p class="card-text">alexboni@ucm.es</p>
+
+    <!-- Contenido principal -->
+    <main class="flex-grow container mx-auto px-4 py-6">
+      <div class="flex flex-col lg:flex-row justify-center gap-8">
+
+        <!-- Card Alex -->
+        <div class="card w-80 bg-base-100 shadow-xl">
+          <figure>
+            <img
+              src="./images/alex.jpeg"
+              alt="Imagen de Alex"
+              class="w-full h-80 object-cover"
+            />
+          </figure>
+          <div class="card-body items-center text-center">
+            <h2 class="card-title">Alex Guillermo Bonilla Taco</h2>
+            <p class="text-sm opacity-70">alexboni@ucm.es</p>
           </div>
         </div>
-        <div class="col-1"></div>
-        <div class="card">
-          <img
-            class="card-img-top"
-            src="./images/manu.jpg"
-            alt="imagen de manu"
-            width="200"
-            height="400"
-            style="object-fit: cover"
-          />
-          <div class="card-body text-center">
-            <h4 class="card-title">Manuel Villa Abajo</h4>
-            <p class="card-text">manuvi03@ucm.es</p>
+
+        <!-- Card Manu -->
+        <div class="card w-80 bg-base-100 shadow-xl">
+          <figure>
+            <img
+              src="./images/manu.jpg"
+              alt="Imagen de Manu"
+              class="w-full h-80 object-cover"
+            />
+          </figure>
+          <div class="card-body items-center text-center">
+            <h2 class="card-title">Manuel Villa Abajo</h2>
+            <p class="text-sm opacity-70">manuvi03@ucm.es</p>
           </div>
         </div>
+
       </div>
-    </div>
-    <footer th:replace="~{fragments/footer :: foot}"></footer>
+    </main>
+
+    <!-- Footer (debe ocupar todo el ancho) -->
+    <footer th:replace="~{fragments/footer :: foot}" class="w-full"></footer>
+
   </body>
 </html>

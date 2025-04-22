@@ -1,25 +1,24 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-  <head>
-    <th:block th:replace="~{fragments/head :: header}"></th:block>
-    <title>Práctica 3</title>
-    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-    <script
-      id="MathJax-script"
-      async
-      src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"
-    ></script>
-  </head>
-  <body>
-    <div th:replace="~{fragments/header :: header}"></div>
-    <nav th:replace="~{fragments/navbar :: navbar}"></nav>
+<html xmlns:th="http://www.thymeleaf.org" data-theme="dark">
 
-    <div class="container mt-4 text-center cuerpo">
-      <h2>Método de ordenación de Bayes</h2>
+<head>
+  <th:block th:replace="~{fragments/head :: header}"></th:block>
+  <title>Práctica 3</title>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
 
-      <div class="table-responsive mt-4 d-flex justify-content-center">
+<body>
+  <div th:replace="~{fragments/header :: header}"></div>
+  <nav th:replace="~{fragments/navbar :: navbar}"></nav>
+
+  <div class="container mt-4 text-center cuerpo-bayes p-10">
+    <h2 class="text-2xl font-bold">Método de ordenación de Bayes</h2>
+
+    <div class="flex justify-center mt-4">
+      <div class="overflow-x-auto">
         <table class="table table-bordered text-center w-auto">
-          <thead class="table-secondary">
+          <thead class="bg-base-200">
             <tr>
               <th></th>
               <th>Iris-setosa</th>
@@ -48,201 +47,194 @@
           </tbody>
         </table>
       </div>
+    </div>
 
-      <div class="mt-5">
-        <h3>Clasificación de muestras</h3>
-        <p class="mb-4">
-          Seleccione una muestra para clasificar según el método de Bayes
-        </p>
 
-        <div class="row justify-content-center">
-          <!-- Muestra 1 -->
-          <div class="col-md-4 mb-4">
-            <div class="card">
-              <div class="card-header bg-primary text-white">
-                <h4>Muestra 1</h4>
-              </div>
-              <div class="card-body">
-                <table class="table table-sm">
-                  <tr>
-                    <td>5.1</td>
-                  </tr>
-                  <tr>
-                    <td>3.5</td>
-                  </tr>
-                  <tr>
-                    <td>1.4</td>
-                  </tr>
-                  <tr>
-                    <td>0.2</td>
-                  </tr>
-                </table>
-                <button
-                  class="btn btn-outline-primary"
-                  onclick="clasificarMuestra(1, [5.1, 3.5, 1.4, 0.2])"
-                >
-                  Clasificar
-                </button>
-                <div id="resultado-1" class="mt-3"></div>
-              </div>
+    <div class="mt-5">
+      <h3 class="text-2xl font-bold">Clasificación de muestras</h3>
+      <p class="mb-4">
+        Seleccione una muestra para clasificar según el método de Bayes
+      </p>
+
+      <div class="row justify-content-center">
+        <!-- Muestra 1 -->
+        <div class="col-md-4 mb-4">
+          <div class="card">
+            <div class="card-header bg-primary text-white">
+              <h4>Muestra 1</h4>
+            </div>
+            <div class="card-body">
+              <table class="table table-sm">
+                <tr>
+                  <td>5.1</td>
+                </tr>
+                <tr>
+                  <td>3.5</td>
+                </tr>
+                <tr>
+                  <td>1.4</td>
+                </tr>
+                <tr>
+                  <td>0.2</td>
+                </tr>
+              </table>
+              <button class="btn btn-outline-primary" onclick="clasificarMuestra(1, [5.1, 3.5, 1.4, 0.2])">
+                Clasificar
+              </button>
+              <div id="resultado-1" class="mt-3"></div>
             </div>
           </div>
+        </div>
 
-          <!-- Muestra 2 -->
-          <div class="col-md-4 mb-4">
-            <div class="card">
-              <div class="card-header bg-primary text-white">
-                <h4>Muestra 2</h4>
-              </div>
-              <div class="card-body">
-                <table class="table table-sm">
-                  <tr>
-                    <td>6.9</td>
-                  </tr>
-                  <tr>
-                    <td>3.1</td>
-                  </tr>
-                  <tr>
-                    <td>4.9</td>
-                  </tr>
-                  <tr>
-                    <td>1.5</td>
-                  </tr>
-                </table>
-                <button
-                  class="btn btn-outline-primary"
-                  onclick="clasificarMuestra(2, [6.9,3.1,4.9,1.5])"
-                >
-                  Clasificar
-                </button>
-                <div id="resultado-2" class="mt-3"></div>
-              </div>
+        <!-- Muestra 2 -->
+        <div class="col-md-4 mb-4">
+          <div class="card">
+            <div class="card-header bg-primary text-white">
+              <h4>Muestra 2</h4>
+            </div>
+            <div class="card-body">
+              <table class="table table-sm">
+                <tr>
+                  <td>6.9</td>
+                </tr>
+                <tr>
+                  <td>3.1</td>
+                </tr>
+                <tr>
+                  <td>4.9</td>
+                </tr>
+                <tr>
+                  <td>1.5</td>
+                </tr>
+              </table>
+              <button class="btn btn-outline-primary" onclick="clasificarMuestra(2, [6.9,3.1,4.9,1.5])">
+                Clasificar
+              </button>
+              <div id="resultado-2" class="mt-3"></div>
             </div>
           </div>
+        </div>
 
-          <!-- Muestra 3 -->
-          <div class="col-md-4 mb-4">
-            <div class="card">
-              <div class="card-header bg-primary text-white">
-                <h4>Muestra 3</h4>
-              </div>
-              <div class="card-body">
-                <table class="table table-sm">
-                  <tr>
-                    <td>5.0</td>
-                  </tr>
-                  <tr>
-                    <td>3.4</td>
-                  </tr>
-                  <tr>
-                    <td>1.5</td>
-                  </tr>
-                  <tr>
-                    <td>0.2</td>
-                  </tr>
-                </table>
-                <button
-                  class="btn btn-outline-primary"
-                  onclick="clasificarMuestra(3, [5.0,3.4,1.5,0.2])"
-                >
-                  Clasificar
-                </button>
-                <div id="resultado-3" class="mt-3"></div>
-              </div>
+        <!-- Muestra 3 -->
+        <div class="col-md-4 mb-4">
+          <div class="card">
+            <div class="card-header bg-primary text-white">
+              <h4>Muestra 3</h4>
+            </div>
+            <div class="card-body">
+              <table class="table table-sm">
+                <tr>
+                  <td>5.0</td>
+                </tr>
+                <tr>
+                  <td>3.4</td>
+                </tr>
+                <tr>
+                  <td>1.5</td>
+                </tr>
+                <tr>
+                  <td>0.2</td>
+                </tr>
+              </table>
+              <button class="btn btn-outline-primary" onclick="clasificarMuestra(3, [5.0,3.4,1.5,0.2])">
+                Clasificar
+              </button>
+              <div id="resultado-3" class="mt-3"></div>
             </div>
           </div>
         </div>
       </div>
     </div>
 
-    <footer th:replace="~{fragments/footer :: foot}"></footer>
-    <script>
-      function calcularMedias() {
-        fetch("/mediaBayes")
-          .then((response) => response.json())
-          .then((data) => {
-            const setosa = data[0];
-            const versicolor = data[1];
-            const latexMatrix = (arr) => {
-              const row = arr.map((n) => n.toFixed(2)).join(" & ");
-              return `\\[ \\begin{bmatrix} ${row} \\end{bmatrix} \\]`;
-            };
+  </div>
 
-            document.getElementById("media-setosa").innerHTML =
-              latexMatrix(setosa);
-            document.getElementById("media-versicolor").innerHTML =
-              latexMatrix(versicolor);
+  <script>
+    function calcularMedias() {
+      fetch("/mediaBayes")
+        .then((response) => response.json())
+        .then((data) => {
+          const setosa = data[0];
+          const versicolor = data[1];
+          const latexMatrix = (arr) => {
+            const row = arr.map((n) => n.toFixed(2)).join(" & ");
+            return `\\[ \\begin{bmatrix} ${row} \\end{bmatrix} \\]`;
+          };
 
-            if (window.MathJax) {
-              MathJax.typesetPromise();
-            }
-          })
-          .catch((error) => {
-            console.error("Error al obtener las medias:", error);
-          });
-      }
+          document.getElementById("media-setosa").innerHTML =
+            latexMatrix(setosa);
+          document.getElementById("media-versicolor").innerHTML =
+            latexMatrix(versicolor);
 
-      function calcularCovarianzas() {
-        fetch("/covarianzaBayes")
-          .then((response) => response.json())
-          .then((data) => {
-            // data es una lista de matrices (una para Setosa y otra para Versicolor)
-            const setosa = data[0]; // Primera matriz (4x4)
-            const versicolor = data[1]; // Segunda matriz (4x4)
-
-            const latexMatrix = (matrix) => {
-              const rows = matrix
-                .map((row) => row.map((n) => n.toFixed(2)).join(" & "))
-                .join(" \\\\ ");
-
-              return `\\[ \\begin{bmatrix} ${rows} \\end{bmatrix} \\]`;
-            };
-
-            document.getElementById("cov-setosa").innerHTML =
-              latexMatrix(setosa);
-            document.getElementById("cov-versicolor").innerHTML =
-              latexMatrix(versicolor);
-
-            if (window.MathJax) {
-              MathJax.typesetPromise();
-            }
-          })
-          .catch((error) => {
-            console.error(
-              "Error al obtener las matrices de covarianza:",
-              error
-            );
-          });
-      }
-
-      function clasificarMuestra(id, muestra) {
-        // Mostrar un spinner mientras se obtiene el resultado
-        document.getElementById(`resultado-${id}`).innerHTML =
-          '<div class="text-center"><div class="spinner-border text-primary" role="status">' +
-          '<span class="visually-hidden">Calculando...</span></div><p>Calculando...</p></div>';
-
-        // Llamar al endpoint del servidor para clasificar
-        fetch("/clasificarBayes", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(muestra),
+          if (window.MathJax) {
+            MathJax.typesetPromise();
+          }
         })
-          .then((response) => response.json())
-          .then((data) => {
-            // Formatear los resultados de porcentajes
-            const setosaProb = (data.setosa * 100).toFixed(2);
-            const versicolorProb = (data.versicolor * 100).toFixed(2);
+        .catch((error) => {
+          console.error("Error al obtener las medias:", error);
+        });
+    }
 
-            // Determinar la clase ganadora
-            const claseMayor =
-              setosaProb > versicolorProb ? "Iris-setosa" : "Iris-versicolor";
-            const probMayor =
-              setosaProb > versicolorProb ? setosaProb : versicolorProb;
+    function calcularCovarianzas() {
+      fetch("/covarianzaBayes")
+        .then((response) => response.json())
+        .then((data) => {
+          // data es una lista de matrices (una para Setosa y otra para Versicolor)
+          const setosa = data[0]; // Primera matriz (4x4)
+          const versicolor = data[1]; // Segunda matriz (4x4)
 
-            // Crear el HTML para mostrar los resultados
-            const resultado = `
+          const latexMatrix = (matrix) => {
+            const rows = matrix
+              .map((row) => row.map((n) => n.toFixed(2)).join(" & "))
+              .join(" \\\\ ");
+
+            return `\\[ \\begin{bmatrix} ${rows} \\end{bmatrix} \\]`;
+          };
+
+          document.getElementById("cov-setosa").innerHTML =
+            latexMatrix(setosa);
+          document.getElementById("cov-versicolor").innerHTML =
+            latexMatrix(versicolor);
+
+          if (window.MathJax) {
+            MathJax.typesetPromise();
+          }
+        })
+        .catch((error) => {
+          console.error(
+            "Error al obtener las matrices de covarianza:",
+            error
+          );
+        });
+    }
+
+    function clasificarMuestra(id, muestra) {
+      // Mostrar un spinner mientras se obtiene el resultado
+      document.getElementById(`resultado-${id}`).innerHTML =
+        '<div class="text-center"><div class="spinner-border text-primary" role="status">' +
+        '<span class="visually-hidden">Calculando...</span></div><p>Calculando...</p></div>';
+
+      // Llamar al endpoint del servidor para clasificar
+      fetch("/clasificarBayes", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(muestra),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          // Formatear los resultados de porcentajes
+          const setosaProb = (data.setosa * 100).toFixed(2);
+          const versicolorProb = (data.versicolor * 100).toFixed(2);
+
+          // Determinar la clase ganadora
+          const claseMayor =
+            setosaProb > versicolorProb ? "Iris-setosa" : "Iris-versicolor";
+          const probMayor =
+            setosaProb > versicolorProb ? setosaProb : versicolorProb;
+
+          // Crear el HTML para mostrar los resultados
+          const resultado = `
               <div class="alert alert-success">
                 <strong>Clasificación:</strong> ${claseMayor}<br>
                 <strong>Probabilidad:</strong> ${probMayor}%
@@ -265,14 +257,16 @@
               </div>
             `;
 
-            document.getElementById(`resultado-${id}`).innerHTML = resultado;
-          })
-          .catch((error) => {
-            console.error("Error al clasificar la muestra:", error);
-            document.getElementById(`resultado-${id}`).innerHTML =
-              '<div class="alert alert-danger">Error al clasificar la muestra</div>';
-          });
-      }
-    </script>
-  </body>
+          document.getElementById(`resultado-${id}`).innerHTML = resultado;
+        })
+        .catch((error) => {
+          console.error("Error al clasificar la muestra:", error);
+          document.getElementById(`resultado-${id}`).innerHTML =
+            '<div class="alert alert-danger">Error al clasificar la muestra</div>';
+        });
+    }
+  </script>
+  <footer th:replace="~{fragments/footer :: foot}"></footer>
+</body>
+
 </html>

@@ -1,81 +1,99 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-  <head>
-    <th:block th:replace="~{fragments/head :: header}"></th:block>
-    <title>Practica 3</title>
-  </head>
-  <script src="/js/script.js"></script>
+<html xmlns:th="http://www.thymeleaf.org" data-theme="dark">
 
-  <body>
-    <div th:replace="~{fragments/header :: header}"></div>
-    <nav th:replace="~{fragments/navbar :: navbar}"></nav>
-    <div class="container text-center cuerpo">
-      <h2>Datos Climáticos</h2>
-      <a
-        class="btn btn-primary"
-        th:href="@{/ejecutar-todos}"
-        href="/ejecutar-todos"
-        >Calcular todo</a
-      >
-      <table class="table table-striped">
-        <thead>
-          <tr>
-            <th>Tiempo Exterior</th>
-            <th>Temperatura</th>
-            <th>Humedad</th>
-            <th>Viento</th>
-            <th>Salida esperada</th>
-            <th></th>
-            <th>Salida IDE3</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr th:each="fila,iter : ${datos}">
-            <td th:text="${fila[0]}"></td>
-            <td th:text="${fila[1]}"></td>
-            <td th:text="${fila[2]}"></td>
-            <td th:text="${fila[3]}"></td>
-            <td th:text="${fila[4]}"></td>
-            <td>
-              <form th:action="@{/ejecutar-uno}" method="post">
-                <input type="hidden" name="index" th:value="${iter.index}" />
-                <input
-                  type="hidden"
-                  name="tiempoExterior"
-                  th:value="${fila[0]}"
-                />
-                <input type="hidden" name="temperatura" th:value="${fila[1]}" />
-                <input type="hidden" name="humedad" th:value="${fila[2]}" />
-                <input type="hidden" name="viento" th:value="${fila[3]}" />
-                <button type="submit" class="btn btn-primary">Calcular</button>
-              </form>
-            </td>
-            <td>
-              <span
-                th:if="${indexResult != null and indexResult == iter.index and resultado == 'no'}"
-                th:text="${resultado}"
-                class="fw-bold text-danger"
-              ></span>
-              <span
-                th:if="${indexResult != null and indexResult == iter.index and resultado == 'si'}"
-                th:text="${resultado}"
-                class="fw-bold text-success"
-              ></span>
-              <span
-                th:if="${resultados != null and resultados[iter.index] != null and resultados[iter.index] == 'no'}"
-                th:text="${resultados[iter.index]}"
-                class="fw-bold text-danger"
-              ></span>
-              <span
-                th:if="${resultados != null and resultados[iter.index] != null and resultados[iter.index] == 'si'}"
-                th:text="${resultados[iter.index]}"
-                class="fw-bold text-success"
-              ></span>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+<head>
+  <th:block th:replace="~{fragments/head :: header}"></th:block>
+  <title>Práctica 3 - Lloyd</title>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+
+<body>
+  <div th:replace="~{fragments/header :: header}"></div>
+  <nav th:replace="~{fragments/navbar :: navbar}"></nav>
+
+  <div class="container mt-4 text-center cuerpo-bayes p-10">
+    <h2 class="text-2xl font-bold">Método de Lloyd</h2>
+
+    <div class="mb-5">
+      <h4 class="font-semibold text-lg">Parámetros de inicialización:</h4>
+      <p style="text-align: center;">
+        \[
+        v =
+        \begin{bmatrix}
+        4.6 & 3.0 & 4.0 & 0.0 \\\\
+        6.8 & 3.4 & 4.6 & 0.7
+        \end{bmatrix}
+        \]
+    </p>
+      <p>
+        <strong>ε:</strong> 10⁻¹⁰ &nbsp;&nbsp;
+        <strong>k<sub>max</sub>:</strong> 10 &nbsp;&nbsp;
+        <strong>α:</strong> 0.1
+      </p>
     </div>
-    <footer th:replace="~{fragments/footer :: foot}"></footer>
-  </body>
+
+    <div class="mb-4">
+      <button class="btn btn-primary" onclick="ejecutarLloyd()">
+        Ejecutar algoritmo de Lloyd
+      </button>
+    </div>
+
+    <div id="resultado-lloyd" class="mt-5 text-left"></div>
+  </div>
+
+  <script>
+    function ejecutarLloyd() {
+      const container = document.getElementById("resultado-lloyd");
+      container.innerHTML = `
+        <div class="text-center">
+          <div class="spinner-border text-primary" role="status">
+            <span class="visually-hidden">Calculando...</span>
+          </div>
+          <p>Ejecutando algoritmo de Lloyd...</p>
+        </div>
+      `;
+
+      fetch("/lloyd", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          v1: [4.6, 3.0, 4.0, 0.0],
+          v2: [6.8, 3.4, 4.6, 0.7],
+          epsilon: 1e-10,
+          kmax: 10,
+          alpha: 0.1
+        }),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          const latexVector = (v) => `\\[ \\begin{bmatrix} ${v.map(n => n.toFixed(2)).join(" \\\\ ")} \\end{bmatrix} \\]`;
+          
+          let html = `
+            <h4 class="font-bold mb-2">Resultados finales:</h4>
+            <p><strong>Centroide 1:</strong> ${latexVector(data.v1)}</p>
+            <p><strong>Centroide 2:</strong> ${latexVector(data.v2)}</p>
+            <p><strong>Número de iteraciones:</strong> ${data.iteraciones}</p>
+            <h5 class="mt-4">Asignación de Clusters:</h5>
+            <ul class="list-disc pl-6">
+              ${data.asignaciones.map((cluster, i) => `<li>Muestra ${i + 1}: Cluster ${cluster + 1}</li>`).join("")}
+            </ul>
+          `;
+
+          container.innerHTML = html;
+          if (window.MathJax) MathJax.typesetPromise();
+        })
+        .catch((error) => {
+          console.error("Error al ejecutar Lloyd:", error);
+          container.innerHTML =
+            '<div class="alert alert-danger">Error al ejecutar el algoritmo de Lloyd</div>';
+        });
+    }
+  </script>
+
+  <footer th:replace="~{fragments/footer :: foot}"></footer>
+</body>
+
 </html>
