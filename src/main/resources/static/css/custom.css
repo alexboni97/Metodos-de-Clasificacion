@@ -1,4 +1,8 @@
 /* usa este fichero para personalizar tus vistas */
+@import "tailwindcss";
+@plugin "daisyui" {
+  themes: light --default, dark --prefersdark, cupcake;
+}
 .cuerpo{
     height: 1000px;
     padding: 50px;;

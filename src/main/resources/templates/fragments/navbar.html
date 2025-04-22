@@ -1,16 +1,11 @@
-<nav
-  th:fragment="navbar"
-  class="navbar navbar-expand navbar-dark bg-dark text-white"
->
-  <div class="nav navbar-nav mx-auto">
-    <a class="nav-item nav-link" th:href="@{/}" href="/">Inicio </a>
-    <a class="nav-item nav-link" th:href="@{/kmedias}" href="/kmedias"
-      >K-Medias</a
-    >
-    <a class="nav-item nav-link" th:href="@{/bayes}" href="/bayes">Bayes</a>
-    <a class="nav-item nav-link" th:href="@{/lloyd}" href="/lloyd">Lloyd</a>
-    <a class="nav-item nav-link" th:href="@{/autores}" href="/autores"
-      >Autores</a
-    >
+<nav th:fragment="navbar" class="navbar bg-base-300 shadow-sm">
+  <div class="navbar-start"></div>
+  <div class="navbar-center">
+    <a class="btn btn-soft btn-primary text-xl" th:href="@{/}" href="/">Inicio </a>
+    <a class="btn btn-soft btn-primary text-xl" th:href="@{/kmedias}" href="/kmedias">K-Medias</a>
+    <a class="btn btn-soft btn-primary text-xl" th:href="@{/bayes}" href="/bayes">Bayes</a>
+    <a class="btn btn-soft btn-primary text-xl" th:href="@{/lloyd}" href="/lloyd">Lloyd</a>
+    <a class="btn btn-soft btn-primary text-xl" th:href="@{/autores}" href="/autores">Autores</a>
   </div>
+  <div class="navbar-end"></div>
 </nav>

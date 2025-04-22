@@ -6,10 +6,7 @@
   </head>
   <script src="/js/script.js"></script>
   <body>
-    <header class="text-center bg-danger p-5 text-light">
-        <h1>Algoritmo ID3</h1>
-        <h4>Ingeniería del Conocimiento - UCM</h4>
-    </header>
+    <div th:replace="~{fragments/header :: header}"></div>
     <nav th:replace="~{fragments/navbar :: navbar}"></nav>
     <div class="container cuerpo">
         <form action="/solucion" method="post">
