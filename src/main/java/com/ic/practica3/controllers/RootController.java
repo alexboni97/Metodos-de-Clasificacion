@@ -9,6 +9,9 @@ import org.springframework.web.bind.annotation.*;
 import com.ic.practica3.models.*;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+
 
 @Controller
 @RequestMapping("/")
@@ -69,4 +72,10 @@ public class RootController {
         return "autores";
     }
 
+    // @PostMapping("/calcular-todo-k-medias")
+    // public List<Map<String,Object>> calcularTodoKMedias() {
+        
+    //     return datos;
+    // }
+    
 }

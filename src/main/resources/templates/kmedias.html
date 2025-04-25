@@ -68,17 +68,50 @@
             <button type="submit" class="btn btn-primary col-1">Buscar Solucion</button>
 
         </form>
-        <div class="text-center mt-5">
-
-            <button type="button" class="btn btn-primary col-1">Calcular ejemplos por defecto</button>
-        </div>
         <div class="container text-center mt-5">
-            <span th:if="${resultado != null and resultado=='si'}" th:text="${resultado}"
+            <span th:if="${resultado != null and resultado=='versicolor'}" th:text="${resultado}"
                 class="rounded-pill bg-success  p-5 fw-bold " style="width:250px"></span>
-            <span th:if="${resultado != null and resultado=='no'}" th:text="${resultado}"
+            <span th:if="${resultado != null and resultado=='iris-setosa'}" th:text="${resultado}"
                 class="rounded-pill bg-danger  p-5 fw-bold " style="width:250px"></span>
             <span th:if="${resultado != null and resultado=='No hay solucion'}" th:text="${resultado}"
                 class="rounded-pill bg-secondary  p-5 fw-bold " style="width:250px"></span>
+        </div>
+        <div class="text-center mt-5">
+            <br>
+            <button type="button" id="calcula-todo-k-medias" class="btn btn-primary col-1">Calcular ejemplos por defecto</button>
+            <div class="overflow-x-auto">
+                <table class="table" id="tabla-ejemplos-k-medias">
+                    <!-- head -->
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>X1</th>
+                            <th>X2</th>
+                            <th>X3</th>
+                            <th>X4</th>
+                            <th>Solucion Esperada</th>
+                            <th>Solucion Real</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <div th:if="${resultados != null}">
+                        <!-- row 1 -->
+                        <tr th:each=" res: ${resultados}" class="hover:bg-base-300" data-id="res.id">
+                          <td th:text="'muestra ' + res.id">1</td>
+                          <td th:text="res.x1">1</td>
+                          <td th:text="res.x2">1</td>
+                          <td th:text="res.x3">1</td>
+                          <td th:text="res.x4">1</td>
+                          <td th:text="res.sol">1</td>
+                          <td class="sol-k-medias">1</td>
+                        </tr>
+                        
+                    </div>
+                    
+                </tbody>
+            </table>
+            
+        </div>
         </div>
     </div>
 
