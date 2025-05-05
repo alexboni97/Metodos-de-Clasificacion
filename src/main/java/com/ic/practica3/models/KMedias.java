@@ -12,36 +12,31 @@ public class KMedias {
     private double[] v1;
     private double[] v2;
     private double[][] centroides;
-    private final double TOLERANCIA=0.01;
-    private final double PESO=2;
+    private final double TOLERANCIA = 0.01;
+    private final double PESO = 2;
     private double[][] centroidesFinales;
 
-    
-
-    public KMedias(){
+    public KMedias() {
         datos = Fichero.leerDatos();
         inicializarCentros();
         calcularKMedias();
     }
 
-    public void inicializarCentros(){
-        v1= new double[]{4.6, 3.0 , 4.0 , 0.0};
-        v2= new double[]{6.8, 3.4, 4.6, 0.7};
-        // Inicialización explícita de centroides (según enunciado)
-        centroides = new double[][] {v1,v2};
+    public void inicializarCentros() {
+        v1 = new double[] { 4.6, 3.0, 4.0, 0.0 };
+        v2 = new double[] { 6.8, 3.4, 4.6, 0.7 };
+        centroides = new double[][] { v1, v2 };
     }
 
-    public void calcularKMedias(){
-        List<Muestra>muestras=datos.values().stream().flatMap(List::stream).collect(Collectors.toList());
+    public void calcularKMedias() {
+        List<Muestra> muestras = datos.values().stream().flatMap(List::stream).collect(Collectors.toList());
         List<double[]> puntos = muestras.stream().map(Muestra::getVector).collect(Collectors.toList());
-        List<Integer> asignaciones = new ArrayList<>(Collections.nCopies(puntos.size(), -1));
         final int MAX_ITER = 100;
         final double m = 2.0;
 
         int n = puntos.size();
         int dim = puntos.get(0).length;
-        int k=2;
-
+        int k = 2;
 
         double[][] U = new double[n][k];
         double[][] prevU = new double[n][k];
@@ -53,7 +48,8 @@ public class KMedias {
                 if (dij == 0) {
                     U[i][j] = 1;
                     for (int l = 0; l < k; l++) {
-                        if (l != j) U[i][l] = 0;
+                        if (l != j)
+                            U[i][l] = 0;
                     }
                     continue;
                 }
@@ -93,7 +89,8 @@ public class KMedias {
                     if (dij == 0) {
                         U[i][j] = 1;
                         for (int l = 0; l < k; l++) {
-                            if (l != j) U[i][l] = 0;
+                            if (l != j)
+                                U[i][l] = 0;
                         }
                         continue;
                     }
@@ -113,12 +110,13 @@ public class KMedias {
                     maxDiff = Math.max(maxDiff, Math.abs(U[i][j] - prevU[i][j]));
                 }
             }
-            if (maxDiff < TOLERANCIA) break;
+            if (maxDiff < TOLERANCIA)
+                break;
         }
         // Guardar centroides finales para clasificar nuevas muestras
         centroidesFinales = centroides;
-
     }
+
     private double distanciaEuclideaCuadrado(double[] a, double[] b) {
         double suma = 0;
         for (int i = 0; i < a.length; i++) {
@@ -126,6 +124,7 @@ public class KMedias {
         }
         return suma;
     }
+
     public static class FuzzyResult {
         public int id;
         public double[] valores;
@@ -137,33 +136,34 @@ public class KMedias {
             this.grados = grados;
         }
     }
+
     public FuzzyResult clasificarNuevaMuestraConGrado(double[] muestra) {
         if (centroidesFinales == null) {
             throw new IllegalStateException("Debes ejecutar aplicarFuzzyKMedias antes de clasificar.");
         }
-    
-        final double m = 2.0;
+
         int k = centroidesFinales.length;
         double[] grados = new double[k];
-    
+
         for (int j = 0; j < k; j++) {
             double dij = distanciaEuclideaCuadrado(muestra, centroidesFinales[j]);
             if (dij == 0) {
                 grados[j] = 1;
                 for (int l = 0; l < k; l++) {
-                    if (l != j) grados[l] = 0;
+                    if (l != j)
+                        grados[l] = 0;
                 }
                 return new FuzzyResult(0, muestra, grados);
             }
             double sum = 0;
             for (int l = 0; l < k; l++) {
                 double dil = distanciaEuclideaCuadrado(muestra, centroidesFinales[l]);
-                sum += Math.pow(1.0 / dil, 1.0 / (m - 1));
+                sum += Math.pow(1.0 / dil, 1.0 / (PESO - 1));
             }
-            grados[j] = Math.pow(1.0 / dij, 1.0 / (m - 1)) / sum;
+            grados[j] = Math.pow(1.0 / dij, 1.0 / (PESO - 1)) / sum;
         }
-    
+
         return new FuzzyResult(0, muestra, grados);
     }
-    
+
 }

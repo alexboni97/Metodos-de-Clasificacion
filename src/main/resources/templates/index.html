@@ -9,7 +9,7 @@
   <body>
     <div th:replace="~{fragments/header :: header}"></div>
     <nav th:replace="~{fragments/navbar :: navbar}"></nav>
-    <div class="container text-center cuerpo">
+    <div class="text-center cuerpo">
       <h2>Bienvenid@ a nuestro simulador sobre los métodos de Clasificación</h2>
       <p>
         Eliga uno de los siguientes algoritmos para realizar la clasificación
@@ -18,7 +18,7 @@
       <div class="d-flex justify-content-center gap-3 mt-4">
         <a href="/bayes" class="btn btn-primary">Clasificador Bayes</a>
         <a href="/kmedias" class="btn btn-success"
-          >Clasificador de las Medias</a
+          >Clasificador de K-Medias Fuzzy</a
         >
         <a href="/lloyd" class="btn btn-warning">Algoritmo de Lloyd</a>
       </div>

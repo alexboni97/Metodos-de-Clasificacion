@@ -70,10 +70,6 @@ public class RootController {
         return "autores";
     }
 
-    // @PostMapping("/calcular-todo-k-medias")
-    // public List<Map<String,Object>> calcularTodoKMedias() {
-
-    // return datos;
 
     @PostMapping("/clasificar-k-medias")
     @ResponseBody 
