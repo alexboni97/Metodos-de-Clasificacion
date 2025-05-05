@@ -68,7 +68,14 @@
             <button type="submit"  class="btn btn-primary col-1">Buscar Solucion</button>
 
         </form>
-        <div id="resultado"></div>
+        <div id="resultado">
+            <br>
+            <div class="barra-clasificacion" style="display: flex; height: 30px; border: 1px solid #ccc; border-radius: 5px; overflow: hidden;">
+                <div id="cluster0" style="background-color: #4CAF50; color: white; text-align: center;"></div>
+                <div id="cluster1" style="background-color: #2196F3; color: white; text-align: center;"></div>
+              </div>
+              
+        </div>
         <div class="container text-center mt-5">
             <span th:if="${resultado != null and resultado=='versicolor'}" th:text="${resultado}"
                 class="rounded-pill bg-success  p-5 fw-bold " style="width:250px"></span>

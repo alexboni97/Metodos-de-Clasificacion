@@ -31,12 +31,20 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     const data = await response.json();
-    const porcentajes = data.grados.map(g => (g * 100).toFixed(2) + "%");
+    const p0 = (data.grados[0] * 100).toFixed(2);
+    const p1 = (data.grados[1] * 100).toFixed(2);
 
     document.getElementById("resultado").innerHTML = `
-        <p><strong>Clúster 0:</strong> ${porcentajes[0]}</p>
-        <p><strong>Clúster 1:</strong> ${porcentajes[1]}</p>
+        <div class="barra-clasificacion" style="display: flex; height: 30px; border: 1px solid #ccc; border-radius: 5px; overflow: hidden; margin-top: 10px;">
+            <div style="width: ${p0}%; background-color: #4CAF50; color: white; text-align: center; line-height: 30px;">
+              Iris-setosa  (${p0}%)
+            </div>
+            <div style="width: ${p1}%; background-color: #2196F3; color: white; text-align: center; line-height: 30px;">
+              Iris-versicolor  (${p1}%)
+            </div>
+        </div>
     `;
+
 });
   document
     .getElementById("calcula-todo-k-medias")
