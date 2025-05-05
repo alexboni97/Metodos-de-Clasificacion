@@ -7,11 +7,9 @@ import org.springframework.ui.Model;
 // UN NAVEGADOR Y ESCRIBE LA SIGUIENTE DIRECCION: http://localhost:8080/
 import org.springframework.web.bind.annotation.*;
 import com.ic.practica3.models.*;
+import com.ic.practica3.models.KMedias.FuzzyResult;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-
 
 @Controller
 @RequestMapping("/")
@@ -74,8 +72,21 @@ public class RootController {
 
     // @PostMapping("/calcular-todo-k-medias")
     // public List<Map<String,Object>> calcularTodoKMedias() {
-        
-    //     return datos;
-    // }
-    
+
+    // return datos;
+
+    @PostMapping("/clasificar-k-medias")
+    @ResponseBody 
+    public FuzzyResult clasificarAjax(
+            @RequestBody Map<String, Object> payload) {
+
+        double x1 = Double.parseDouble(payload.get("x1").toString());
+        double x2 = Double.parseDouble(payload.get("x2").toString());
+        double x3 = Double.parseDouble(payload.get("x3").toString());
+        double x4 = Double.parseDouble(payload.get("x4").toString());
+
+        double[] muestra = new double[] { x1, x2, x3, x4 };
+
+        return km.clasificarNuevaMuestraConGrado(muestra);
+    }
 }

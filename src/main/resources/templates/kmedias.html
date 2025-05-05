@@ -29,45 +29,46 @@
             </p>
           </div>
 
-        <form action="/clasificar-k-medias" method="post" class="mx-auto text-center justify-center">
+        <form id="form-k-medias" action="/clasificar-k-medias" method="post" class="mx-auto text-center justify-center">
             <div class="flex mx-auto justify-center">
                 <label class="floating-label m-3">
-                    <input type="text" placeholder="Tolerancia = 0.01" class="input input-lg" />
+                    <input type="text" id="epsilon" name="epsilon" placeholder="Tolerancia = 0.01" class="input input-lg" />
                     <span>Tolerancia</span>
                 </label>
                 <label class="floating-label m-3">
-                    <input type="text" placeholder="Peso exponencial = 2" class="input input-lg" />
+                    <input type="text" id="b" name="b" placeholder="Peso exponencial = 2" class="input input-lg" />
                     <span>Peso exponencial</span>
                 </label>
 
             </div>
             <div class="flex justify-center">
                 <label class="floating-label m-3">
-                    <input type="text" placeholder="X1" class="input input-lg validator" required />
+                    <input type="text" id="x1" name="x1" placeholder="X1" class="input input-lg validator" required />
                     <span>X1</span>
                     <p class="validator-hint">Introduce valores numéricos</p>
                 </label>
 
                 <label class="floating-label m-3">
-                    <input type="double" placeholder="X2" class="input input-lg validator" required />
+                    <input type="double" id="x2" name="x2" placeholder="X2" class="input input-lg validator" required />
                     <span>X2</span>
                     <p class="validator-hint">Introduce valores numéricos</p>
                 </label>
                 <label class="floating-label m-3">
-                    <input type="text" placeholder="X3" class="input input-lg validator" required />
+                    <input type="text" id="x3" name="x3" placeholder="X3" class="input input-lg validator" required />
                     <span>X3</span>
                     <p class="validator-hint">Introduce valores numéricos</p>
                 </label>
                 <label class="floating-label m-3">
-                    <input type="text" placeholder="X4" class="input input-lg validator" required />
+                    <input type="text" id="x4" name="x4" placeholder="X4" class="input input-lg validator" required />
                     <span>X4</span>
                     <p class="validator-hint">Introduce valores numéricos</p>
                 </label>
 
             </div>
-            <button type="submit" class="btn btn-primary col-1">Buscar Solucion</button>
+            <button type="submit"  class="btn btn-primary col-1">Buscar Solucion</button>
 
         </form>
+        <div id="resultado"></div>
         <div class="container text-center mt-5">
             <span th:if="${resultado != null and resultado=='versicolor'}" th:text="${resultado}"
                 class="rounded-pill bg-success  p-5 fw-bold " style="width:250px"></span>

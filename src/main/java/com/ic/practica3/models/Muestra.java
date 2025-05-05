@@ -53,4 +53,8 @@ public class Muestra {
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
+
+    public double[] getVector(){
+        return new double[]{valor1,valor2,valor3,valor4};
+    }
 }
