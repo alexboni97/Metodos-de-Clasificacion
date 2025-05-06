@@ -19,10 +19,10 @@ public class Bayes {
         List<Muestra> clase = datos.get(key);
         List<Double> medias = new ArrayList<>(Arrays.asList(0.0, 0.0, 0.0, 0.0));
         for (int j = 0; j < clase.size(); j++) {
-            double aux1 = clase.get(j).getValor1() * 1 / clase.size();
-            double aux2 = clase.get(j).getValor2() * 1 / clase.size();
-            double aux3 = clase.get(j).getValor3() * 1 / clase.size();
-            double aux4 = clase.get(j).getValor4() * 1 / clase.size();
+            double aux1 = clase.get(j).getValor1() * (1 / clase.size());
+            double aux2 = clase.get(j).getValor2() * (1 / clase.size());
+            double aux3 = clase.get(j).getValor3() * (1 / clase.size());
+            double aux4 = clase.get(j).getValor4() * (1 / clase.size());
             medias.set(0, aux1 + medias.get(0));
             medias.set(1, aux2 + medias.get(1));
             medias.set(2, aux3 + medias.get(2));

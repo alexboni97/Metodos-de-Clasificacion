@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import com.ic.practica3.models.*;
 import com.ic.practica3.models.KMedias.FuzzyResult;
+import com.ic.practica3.models.Lloyd.LloydResult;
 
 import org.springframework.stereotype.Controller;
 
@@ -41,6 +42,7 @@ public class RootController {
     @PostMapping("/clasificarBayes")
     @ResponseBody
     public Map<String, Double> clasificarBayes(@RequestBody double[] muestra) {
+        double[] muestra1 = new double[] { 5, 5, 5, 5 };
         return by.clasificarMuestraWeb(muestra);
     }
 
@@ -70,9 +72,8 @@ public class RootController {
         return "autores";
     }
 
-
     @PostMapping("/clasificar-k-medias")
-    @ResponseBody 
+    @ResponseBody
     public FuzzyResult clasificarAjax(
             @RequestBody Map<String, Object> payload) {
 
@@ -84,5 +85,20 @@ public class RootController {
         double[] muestra = new double[] { x1, x2, x3, x4 };
 
         return km.clasificarNuevaMuestraConGrado(muestra);
+    }
+
+    @PostMapping("/clasificar-lloyd")
+    @ResponseBody
+    public LloydResult clasificarLloyd(
+            @RequestBody Map<String, Object> payload) {
+
+        double x1 = Double.parseDouble(payload.get("x1").toString());
+        double x2 = Double.parseDouble(payload.get("x2").toString());
+        double x3 = Double.parseDouble(payload.get("x3").toString());
+        double x4 = Double.parseDouble(payload.get("x4").toString());
+
+        double[] muestra = new double[] { x1, x2, x3, x4 };
+
+        return ll.clasificarMuestra(muestra);
     }
 }
