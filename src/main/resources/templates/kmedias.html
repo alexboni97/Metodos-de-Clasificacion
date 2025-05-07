@@ -1,90 +1,105 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" data-theme="dark">
 
-<head>
-    <th:block th:replace="~{fragments/head :: header}"></th:block>
-    <title>Práctica 3</title>
-</head>
-<script src="/js/script.js"></script>
+    <head>
+        <th:block th:replace="~{fragments/head :: header}"></th:block>
+        <title>Práctica 3</title>
+    </head>
+    <script src="/js/script.js"></script>
 
-<body>
-    <div th:replace="~{fragments/header :: header}"></div>
-    <nav th:replace="~{fragments/navbar :: navbar}"></nav>
-    <div class=" cuerpo">
-        <div class="text-center">
-            <h4 class="font-semibold text-lg">Parámetros de inicialización:</h4>
-            <p style="text-align: center;">
-              \[
-              v =
-              \begin{bmatrix}
-              4.6 & 3.0 & 4.0 & 0.0 \\\\
-              6.8 & 3.4 & 4.6 & 0.7
-              \end{bmatrix}
-              \]
-          </p>
-            <p>
-              <strong>ε:</strong> 0.01 &nbsp;&nbsp;
-              <strong>b:</strong> 2 &nbsp;&nbsp;
-              
-            </p>
-          </div>
+    <body>
+        <div th:replace="~{fragments/header :: header}"></div>
+        <nav th:replace="~{fragments/navbar :: navbar}"></nav>
+        <div class=" cuerpo">
+            <div class="text-center">
+                <h2 class="text-2xl font-bold">Método K-Medias</h2>
+                <h4 class="font-semibold text-lg">Parámetros de
+                    inicialización:</h4>
+                <p style="text-align: center;">
+                    \[
+                    v =
+                    \begin{bmatrix}
+                    4.6 & 3.0 & 4.0 & 0.0 \\\\
+                    6.8 & 3.4 & 4.6 & 0.7
+                    \end{bmatrix}
+                    \]
+                </p>
+                <p>
+                    <strong>ε:</strong> 0.01 &nbsp;&nbsp;
+                    <strong>b:</strong> 2 &nbsp;&nbsp;
 
-        <form id="form-k-medias" action="/clasificar-k-medias" method="post" class="mx-auto text-center justify-center">
-            <div class="flex justify-center">
-                <label class="floating-label m-3">
-                    <input type="text" id="x1" name="x1" placeholder="X1" class="input input-lg validator" required />
-                    <span>X1</span>
-                    <p class="validator-hint">Introduce valores numéricos</p>
-                </label>
+                </p>
+            </div>
 
-                <label class="floating-label m-3">
-                    <input type="double" id="x2" name="x2" placeholder="X2" class="input input-lg validator" required />
-                    <span>X2</span>
-                    <p class="validator-hint">Introduce valores numéricos</p>
-                </label>
-                <label class="floating-label m-3">
-                    <input type="text" id="x3" name="x3" placeholder="X3" class="input input-lg validator" required />
-                    <span>X3</span>
-                    <p class="validator-hint">Introduce valores numéricos</p>
-                </label>
-                <label class="floating-label m-3">
-                    <input type="text" id="x4" name="x4" placeholder="X4" class="input input-lg validator" required />
-                    <span>X4</span>
-                    <p class="validator-hint">Introduce valores numéricos</p>
-                </label>
+            <form id="form-k-medias" action="/clasificar-k-medias" method="post"
+                class="mx-auto text-center justify-center">
+                <div class="flex justify-center">
+                    <label class="floating-label m-3">
+                        <input type="text" id="x1" name="x1" placeholder="X1"
+                            class="input input-lg validator" required />
+                        <span>X1</span>
+                        <p class="validator-hint">Introduce valores
+                            numéricos</p>
+                    </label>
+
+                    <label class="floating-label m-3">
+                        <input type="double" id="x2" name="x2" placeholder="X2"
+                            class="input input-lg validator" required />
+                        <span>X2</span>
+                        <p class="validator-hint">Introduce valores
+                            numéricos</p>
+                    </label>
+                    <label class="floating-label m-3">
+                        <input type="text" id="x3" name="x3" placeholder="X3"
+                            class="input input-lg validator" required />
+                        <span>X3</span>
+                        <p class="validator-hint">Introduce valores
+                            numéricos</p>
+                    </label>
+                    <label class="floating-label m-3">
+                        <input type="text" id="x4" name="x4" placeholder="X4"
+                            class="input input-lg validator" required />
+                        <span>X4</span>
+                        <p class="validator-hint">Introduce valores
+                            numéricos</p>
+                    </label>
+
+                </div>
+                <button type="submit" class="btn btn-primary col-1">Buscar
+                    Solucion</button>
+
+            </form>
+            <div id="resultado">
+                <br>
+                <div class="barra-clasificacion"
+                    style="display: flex; height: 30px; border: 1px solid #ccc; border-radius: 5px; overflow: hidden;">
+                    <div id="cluster0"
+                        style="background-color: #4CAF50; color: white; text-align: center;"></div>
+                    <div id="cluster1"
+                        style="background-color: #2196F3; color: white; text-align: center;"></div>
+                </div>
 
             </div>
-            <button type="submit"  class="btn btn-primary col-1">Buscar Solucion</button>
 
-        </form>
-        <div id="resultado">
-            <br>
-            <div class="barra-clasificacion" style="display: flex; height: 30px; border: 1px solid #ccc; border-radius: 5px; overflow: hidden;">
-                <div id="cluster0" style="background-color: #4CAF50; color: white; text-align: center;"></div>
-                <div id="cluster1" style="background-color: #2196F3; color: white; text-align: center;"></div>
-              </div>
-              
+            <div class="text-center mt-5">
+                <br>
+                <h4>O si prefieres ejecuta nuestras muestras de ejemplo:</h4>
+                <button type="button" id="btn-ejemplos"
+                    class="btn btn-secondary mt-2">
+                    Clasificar estas 3 muestras
+                </button>
+                <ul id="lista-ejemplos">
+                    <li><strong>Muestra 1:</strong> [5.1, 3.5, 1.4, 0.2]</li>
+                    <li><strong>Muestra 2:</strong> [6.0, 2.7, 4.5, 1.5]</li>
+                    <li><strong>Muestra 3:</strong> [5.8, 2.7, 3.9, 1.2]</li>
+                </ul>
+
+                <div id="ejemplos-container" class="mt-4"></div>
+
+            </div>
         </div>
 
-        <div class="text-center mt-5">
-            <br>
-            <h4>O si prefieres ejecuta nuestras muestras de ejemplo:</h4>
-            <button type="button" id="btn-ejemplos" class="btn btn-secondary mt-2">
-              Clasificar estas 3 muestras
-            </button>
-            <ul id="lista-ejemplos">
-                <li><strong>Muestra 1:</strong> [5.1, 3.5, 1.4, 0.2]</li>
-                <li><strong>Muestra 2:</strong> [6.0, 2.7, 4.5, 1.5]</li>
-                <li><strong>Muestra 3:</strong> [5.8, 2.7, 3.9, 1.2]</li>
-              </ul>
-            
-            
-              <div id="ejemplos-container" class="mt-4"></div>
-
-        </div>
-    </div>
-
-    <footer th:replace="~{fragments/footer :: foot}"></footer>
-</body>
+        <footer th:replace="~{fragments/footer :: foot}"></footer>
+    </body>
 
 </html>

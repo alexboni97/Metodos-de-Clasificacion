@@ -14,6 +14,13 @@ public class Muestra {
         this.nombre = nombre;
     }
 
+    public Muestra(Double valor1, Double valor2, Double valor3, Double valor4) {
+        this.valor1 = valor1;
+        this.valor2 = valor2;
+        this.valor3 = valor3;
+        this.valor4 = valor4;
+    }
+
     public Double getValor1() {
         return valor1;
     }
@@ -54,7 +61,7 @@ public class Muestra {
         this.nombre = nombre;
     }
 
-    public double[] getVector(){
-        return new double[]{valor1,valor2,valor3,valor4};
+    public double[] getVector() {
+        return new double[] { valor1, valor2, valor3, valor4 };
     }
 }

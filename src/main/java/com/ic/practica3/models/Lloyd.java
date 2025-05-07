@@ -23,10 +23,16 @@ public class Lloyd {
 
     public Lloyd() {
         datos = Fichero.leerDatos();
-        for (int index = 0; index < max_iteraciones; index++) {
+        boolean parar = false;
+        int index = 0;
+        while (!parar && index < max_iteraciones) {
             double[][] matriz_iteracion = iteracion("Iris-setosa");
             matriz_iteracion = iteracion("Iris-versicolor");
-            boolean seguir = comprobar(matriz_iteracion);
+            if (!seguir(matriz_iteracion)) {
+                parar = true;
+            }
+            matriz = matriz_iteracion;
+            index++;
         }
     }
 
@@ -42,10 +48,12 @@ public class Lloyd {
 
     public double[][] recalcular_centro(sol_euclidea dist_euclidea, double[][] m, Muestra muestra) {
         double[] resta = { 0.0, 0.0, 0.0, 0.0 };
-        for (int index = 0; index < 4; index++) {
-            resta[index] = muestra.getValor1() - m[dist_euclidea.i][index];
+        for (int index = 0; index < resta.length; index++) {
+            resta[index] = (muestra.getValor1() - m[dist_euclidea.i][index]) * aprendizaje;
         }
-
+        for (int index = 0; index < resta.length; index++) {
+            m[dist_euclidea.i][index] = m[dist_euclidea.i][index] + resta[index];
+        }
         return m;
     }
 
@@ -65,10 +73,16 @@ public class Lloyd {
         }
     }
 
-    public boolean comprobar(double[][] matriz_iteracion) {
-        boolean b = true;
-
-        return b;
+    public boolean seguir(double[][] matriz_iteracion) {
+        int i = 0;
+        while (i < 2) {
+            Muestra m = new Muestra(matriz[i][0], matriz[i][1], matriz[i][2], matriz[i][3]);
+            if (distanciaEuclidea(m, matriz_iteracion).valor > tolerancia) {
+                return true;
+            }
+            i++;
+        }
+        return false;
     }
 
     public static class LloydResult {
@@ -84,6 +98,10 @@ public class Lloyd {
     }
 
     public LloydResult clasificarMuestra(double[] muestra) {
+        sol_euclidea euc_setosa = distanciaEuclidea(new Muestra(muestra[0], muestra[1], muestra[2], muestra[3]),
+                matriz);
+        sol_euclidea euc_versicolor = distanciaEuclidea(new Muestra(muestra[0], muestra[1], muestra[2], muestra[3]),
+                matriz);
         return null;
     }
 }
