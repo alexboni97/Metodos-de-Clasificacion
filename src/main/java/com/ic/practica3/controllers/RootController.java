@@ -42,6 +42,7 @@ public class RootController {
     @PostMapping("/clasificarBayes")
     @ResponseBody
     public Map<String, Double> clasificarBayes(@RequestBody double[] muestra) {
+        double[] muestra1 = new double[]{5.5,4.2,1.4,0.2};
         return by.clasificarMuestraWeb(muestra);
     }
 
