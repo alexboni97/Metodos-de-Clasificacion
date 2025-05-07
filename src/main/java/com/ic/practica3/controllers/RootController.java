@@ -42,7 +42,6 @@ public class RootController {
     @PostMapping("/clasificarBayes")
     @ResponseBody
     public Map<String, Double> clasificarBayes(@RequestBody double[] muestra) {
-        double[] muestra1 = new double[]{5.5,4.2,1.4,0.2};
         return by.clasificarMuestraWeb(muestra);
     }
 
@@ -89,7 +88,7 @@ public class RootController {
 
     @PostMapping("/clasificar-lloyd")
     @ResponseBody
-    public LloydResult clasificarLloyd(
+    public String clasificarLloyd(
             @RequestBody Map<String, Object> payload) {
 
         double x1 = Double.parseDouble(payload.get("x1").toString());
@@ -99,6 +98,8 @@ public class RootController {
 
         double[] muestra = new double[] { x1, x2, x3, x4 };
 
-        return ll.clasificarMuestra(muestra);
+        LloydResult x = ll.clasificarMuestra(muestra);
+        return x.resultado;
+
     }
 }

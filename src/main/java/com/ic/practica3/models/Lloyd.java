@@ -26,8 +26,8 @@ public class Lloyd {
         boolean parar = false;
         int index = 0;
         while (!parar && index < max_iteraciones) {
-            double[][] matriz_iteracion = iteracion("Iris-setosa");
-            matriz_iteracion = iteracion("Iris-versicolor");
+            double[][] matriz_iteracion = iteracion("Iris-setosa", 0);
+            matriz_iteracion = iteracion("Iris-versicolor", 1);
             if (!seguir(matriz_iteracion)) {
                 parar = true;
             }
@@ -36,7 +36,7 @@ public class Lloyd {
         }
     }
 
-    public double[][] iteracion(String key) {
+    public double[][] iteracion(String key, int c) {
         List<Muestra> clase = datos.get(key);
         double[][] m = matriz;
         for (int i = 0; i < clase.size(); i++) {
@@ -48,9 +48,11 @@ public class Lloyd {
 
     public double[][] recalcular_centro(sol_euclidea dist_euclidea, double[][] m, Muestra muestra) {
         double[] resta = { 0.0, 0.0, 0.0, 0.0 };
-        for (int index = 0; index < resta.length; index++) {
-            resta[index] = (muestra.getValor1() - m[dist_euclidea.i][index]) * aprendizaje;
-        }
+        resta[0] = (muestra.getValor1() - m[dist_euclidea.i][0]) * aprendizaje;
+        resta[1] = (muestra.getValor2() - m[dist_euclidea.i][1]) * aprendizaje;
+        resta[2] = (muestra.getValor3() - m[dist_euclidea.i][2]) * aprendizaje;
+        resta[3] = (muestra.getValor4() - m[dist_euclidea.i][3]) * aprendizaje;
+
         for (int index = 0; index < resta.length; index++) {
             m[dist_euclidea.i][index] = m[dist_euclidea.i][index] + resta[index];
         }
@@ -66,6 +68,7 @@ public class Lloyd {
                 Math.pow(2, (muestra.getValor2() - m[1][1])) +
                 Math.pow(2, (muestra.getValor3() - m[1][2])) +
                 Math.pow(2, (muestra.getValor4() - m[1][3]))));
+
         if (setosa < versicolor) {
             return new sol_euclidea(0, setosa);
         } else {
@@ -77,6 +80,7 @@ public class Lloyd {
         int i = 0;
         while (i < 2) {
             Muestra m = new Muestra(matriz[i][0], matriz[i][1], matriz[i][2], matriz[i][3]);
+
             if (distanciaEuclidea(m, matriz_iteracion).valor > tolerancia) {
                 return true;
             }
@@ -86,14 +90,15 @@ public class Lloyd {
     }
 
     public static class LloydResult {
-        public int id;
-        public double[] valores;
-        public double[] grados;
+        public String resultado;
+        public double[] grado_pertenencia;
 
-        public LloydResult(int id, double[] valores, double[] grados) {
-            this.id = id;
-            this.valores = valores;
-            this.grados = grados;
+        public LloydResult() {
+        }
+
+        public LloydResult(String resultado, double[] grados) {
+            this.resultado = resultado;
+            this.grado_pertenencia = grados;
         }
     }
 
@@ -102,6 +107,16 @@ public class Lloyd {
                 matriz);
         sol_euclidea euc_versicolor = distanciaEuclidea(new Muestra(muestra[0], muestra[1], muestra[2], muestra[3]),
                 matriz);
-        return null;
+        double total = euc_setosa.valor + euc_versicolor.valor;
+        LloydResult ll = new LloydResult();
+        if (euc_setosa.valor < euc_versicolor.valor) {
+            ll.resultado = "Iris-setosa";
+        } else {
+            ll.resultado = "Iris-versicolor";
+        }
+        ll.grado_pertenencia[0] = euc_versicolor.valor * 100 / total;
+        ll.grado_pertenencia[1] = euc_setosa.valor * 100 / total;
+        System.out.println(ll.grado_pertenencia[0] + " | " + ll.grado_pertenencia[1]);
+        return ll;
     }
 }
