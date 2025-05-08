@@ -136,26 +136,15 @@
     <script>
         // Función para clasificar cualquier muestra
         function clasificarMuestra(muestra, id) {
-            console.log("--- Función clasificarMuestra ---");
-            console.log("Muestra recibida:", muestra);
-            console.log("ID de la muestra:", id);
-
             document.getElementById(`resultado-${id}`).innerHTML =
                 '<div class="text-center"><span class="loading loading-spinner text-primary"></span><p>Calculando...</p></div>';
-
-            console.log("Enviando petición POST a /clasificar-lloyd con:", JSON.stringify(muestra));
 
             fetch("/clasificar-lloyd", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(muestra),
             })
-            .then(response => {
-                console.log("--- Respuesta del servidor recibida ---");
-                console.log("Estado de la respuesta:", response.status);
-                console.log("¿La respuesta es OK?", response.ok);
-                return response.json();
-            })
+            .then(response => response.json())
             .then((data) => {
                 console.log("--- Datos JSON recibidos del servidor ---");
                 console.log("Datos:", data);

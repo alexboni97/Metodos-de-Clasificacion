@@ -88,14 +88,7 @@ public class RootController {
 
     @PostMapping("/clasificar-lloyd")
     @ResponseBody
-    public LloydResult clasificarLloyd(
-            @RequestBody Map<String, Object> payload) {
-        double x1 = Double.parseDouble(payload.get("x1").toString());
-        double x2 = Double.parseDouble(payload.get("x2").toString());
-        double x3 = Double.parseDouble(payload.get("x3").toString());
-        double x4 = Double.parseDouble(payload.get("x4").toString());
-
-        double[] muestra = new double[] { x1, x2, x3, x4 };
+    public LloydResult clasificarLloyd(@RequestBody double[] muestra) {
 
         return ll.clasificarMuestra(muestra);
 

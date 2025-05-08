@@ -32,11 +32,6 @@
 			<artifactId>spring-boot-starter-thymeleaf</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>io.github.wimdeblauwe</groupId>
-			<artifactId>htmx-spring-boot-thymeleaf</artifactId>
-			<version>4.0.1</version>
-		</dependency>
-		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
 			<optional>true</optional>
