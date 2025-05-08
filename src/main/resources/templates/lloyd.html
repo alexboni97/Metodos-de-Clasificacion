@@ -153,8 +153,8 @@
                 const resultado = `
                     <div class="p-3 rounded" style="background-color: ${color}; color: white;">
                         <p><strong>Predicción:</strong> ${data.resultado}</p>
-                        <p><strong>Grado pertenencia 1:</strong> ${(data.grado_pertenencia[0] * 100).toFixed(2)}%</p>
-                        <p><strong>Grado pertenencia 2:</strong> ${(data.grado_pertenencia[1] * 100).toFixed(2)}%</p>
+                        <p><strong>Grado pertenencia Iris-setosa:</strong> ${(data.grado_pertenencia[0]).toFixed(2)}%</p>
+                        <p><strong>Grado pertenencia Iris-versicolor:</strong> ${(data.grado_pertenencia[1]).toFixed(2)}%</p>
                     </div>
                 `;
 
@@ -212,8 +212,8 @@
                 const resultado = `
                     <div class="p-3 rounded" style="background-color: ${color}; color: white;">
                         <p><strong>Predicción:</strong> ${data.resultado}</p>
-                        <p><strong>Grado pertenencia 1:</strong> ${(data.grado_pertenencia[0] * 100).toFixed(2)}%</p>
-                        <p><strong>Grado pertenencia 2:</strong> ${(data.grado_pertenencia[1] * 100).toFixed(2)}%</p>
+                        <p><strong>Grado pertenencia Iris-setosa:</strong> ${(data.grado_pertenencia[0]).toFixed(2)}%</p>
+                        <p><strong>Grado pertenencia Iris-versicolor:</strong> ${(data.grado_pertenencia[1]).toFixed(2)}%</p>
                     </div>
                 `;
                 document.getElementById("resultado-contenido").innerHTML = resultado;

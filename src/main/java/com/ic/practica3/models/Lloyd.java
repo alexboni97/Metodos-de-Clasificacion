@@ -60,14 +60,14 @@ public class Lloyd {
     }
 
     public sol_euclidea distanciaEuclidea(Muestra muestra, double[][] m) {
-        double setosa = Math.sqrt((Math.pow(2, (muestra.getValor1() - m[0][0])) +
-                Math.pow(2, (muestra.getValor2() - m[0][1])) +
-                Math.pow(2, (muestra.getValor3() - m[0][2])) +
-                Math.pow(2, (muestra.getValor4() - m[0][3]))));
-        double versicolor = Math.sqrt((Math.pow(2, (muestra.getValor1() - m[1][0])) +
-                Math.pow(2, (muestra.getValor2() - m[1][1])) +
-                Math.pow(2, (muestra.getValor3() - m[1][2])) +
-                Math.pow(2, (muestra.getValor4() - m[1][3]))));
+        double setosa = Math.pow(muestra.getValor1() - m[0][0], 2) +
+                Math.pow(muestra.getValor2() - m[0][1], 2) +
+                Math.pow(muestra.getValor3() - m[0][2], 2) +
+                Math.pow(muestra.getValor4() - m[0][3], 2);
+        double versicolor = Math.pow(muestra.getValor1() - m[1][0], 2) +
+                Math.pow(muestra.getValor2() - m[1][1], 2) +
+                Math.pow(muestra.getValor3() - m[1][2], 2) +
+                Math.pow(muestra.getValor4() - m[1][3], 2);
 
         if (setosa < versicolor) {
             return new sol_euclidea(0, setosa);
@@ -103,10 +103,9 @@ public class Lloyd {
     }
 
     public LloydResult clasificarMuestra(double[] muestra) {
-        System.out.println("buenass");
-        sol_euclidea euc_setosa = distanciaEuclidea(new Muestra(muestra[0], muestra[1], muestra[2], muestra[3]),
+        sol_euclidea euc_setosa = distanciaEuclidea2(0, new Muestra(muestra[0], muestra[1], muestra[2], muestra[3]),
                 matriz);
-        sol_euclidea euc_versicolor = distanciaEuclidea(new Muestra(muestra[0], muestra[1], muestra[2], muestra[3]),
+        sol_euclidea euc_versicolor = distanciaEuclidea2(1, new Muestra(muestra[0], muestra[1], muestra[2], muestra[3]),
                 matriz);
         double total = euc_setosa.valor + euc_versicolor.valor;
         LloydResult ll = new LloydResult();
@@ -120,5 +119,15 @@ public class Lloyd {
         ll.grado_pertenencia[1] = euc_setosa.valor * 100 / total;
         System.out.println(ll.grado_pertenencia[0] + " | " + ll.grado_pertenencia[1]);
         return ll;
+    }
+
+    private sol_euclidea distanciaEuclidea2(int i, Muestra muestra, double[][] matriz) {
+        double valor = Math.pow(muestra.getValor1() - matriz[i][0], 2) +
+                Math.pow(muestra.getValor2() - matriz[i][1], 2) +
+                Math.pow(muestra.getValor3() - matriz[i][2], 2) +
+                Math.pow(muestra.getValor4() - matriz[i][3], 2);
+
+        sol_euclidea euc = new sol_euclidea(i, valor);
+        return euc;
     }
 }
