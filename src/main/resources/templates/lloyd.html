@@ -34,44 +34,44 @@
         </p>
       </div>
 
-      <form id="form-lloyd" class="mx-auto text-center justify-center">
+      <form id="form-lloyd" action="/clasificar-lloyd" method="post"
+        class="mx-auto text-center justify-center">
         <div class="flex justify-center">
           <label class="floating-label m-3">
             <input type="text" id="x1" name="x1" placeholder="X1"
               class="input input-lg validator" required />
             <span>X1</span>
-            <p class="validator-hint">Introduce valores numéricos</p>
+            <p class="validator-hint">Introduce valores
+              numéricos</p>
           </label>
 
           <label class="floating-label m-3">
-            <input type="text" id="x2" name="x2" placeholder="X2"
+            <input type="double" id="x2" name="x2" placeholder="X2"
               class="input input-lg validator" required />
             <span>X2</span>
-            <p class="validator-hint">Introduce valores numéricos</p>
+            <p class="validator-hint">Introduce valores
+              numéricos</p>
           </label>
-
           <label class="floating-label m-3">
             <input type="text" id="x3" name="x3" placeholder="X3"
               class="input input-lg validator" required />
             <span>X3</span>
-            <p class="validator-hint">Introduce valores numéricos</p>
+            <p class="validator-hint">Introduce valores
+              numéricos</p>
           </label>
-
           <label class="floating-label m-3">
             <input type="text" id="x4" name="x4" placeholder="X4"
               class="input input-lg validator" required />
             <span>X4</span>
-            <p class="validator-hint">Introduce valores numéricos</p>
+            <p class="validator-hint">Introduce valores
+              numéricos</p>
           </label>
         </div>
         <button type="submit" class="btn btn-primary col-1">Buscar
           Solución</button>
       </form>
-
-      <!-- RESULTADO DE CLASIFICACIÓN -->
-      <div id="resultado-lloyd" class="mt-5" style="display: none;">
-        <div id="resultado-contenido" class="p-3 rounded"></div>
-      </div>
+      <br>
+      <div id="resultado-contenido"></div>
 
       <div class="mt-10">
         <h3 class="text-2xl font-bold">Algunas de nuestras muestras</h3>
@@ -79,7 +79,6 @@
           de Lloyd</p>
 
         <div class="flex flex-wrap justify-center gap-6">
-          <!-- Muestra 1 -->
           <div class="card w-80 bg-base-200 shadow-md">
             <div class="card-body items-center text-center">
               <h2 class="card-title">Muestra 1</h2>
@@ -90,43 +89,41 @@
                 <tr><td>0.2</td></tr>
               </table>
               <button class="btn btn-outline btn-primary mt-2"
-                onclick="clasificarMuestra([5.1, 3.5, 1.4, 0.2], 'resultado-1')">
+                onclick="clasificarMuestra([5.1, 3.5, 1.4, 0.2], 1)">
                 Clasificar
               </button>
               <div id="resultado-1" class="mt-3 w-full"></div>
             </div>
           </div>
 
-          <!-- Muestra 2 -->
           <div class="card w-80 bg-base-200 shadow-md">
             <div class="card-body items-center text-center">
               <h2 class="card-title">Muestra 2</h2>
               <table class="table table-xs text-center">
-                <tr><td>6.0</td></tr>
-                <tr><td>2.7</td></tr>
-                <tr><td>4.5</td></tr>
+                <tr><td>6.9</td></tr>
+                <tr><td>3.1</td></tr>
+                <tr><td>4.9</td></tr>
                 <tr><td>1.5</td></tr>
               </table>
               <button class="btn btn-outline btn-primary mt-2"
-                onclick="clasificarMuestra([6.0, 2.7, 4.5, 1.5], 'resultado-2')">
+                onclick="clasificarMuestra([6.9,3.1,4.9,1.5], 2)">
                 Clasificar
               </button>
               <div id="resultado-2" class="mt-3 w-full"></div>
             </div>
           </div>
 
-          <!-- Muestra 3 -->
           <div class="card w-80 bg-base-200 shadow-md">
             <div class="card-body items-center text-center">
               <h2 class="card-title">Muestra 3</h2>
               <table class="table table-xs text-center">
-                <tr><td>5.8</td></tr>
-                <tr><td>2.7</td></tr>
-                <tr><td>3.9</td></tr>
-                <tr><td>1.2</td></tr>
+                <tr><td>5.0</td></tr>
+                <tr><td>3.4</td></tr>
+                <tr><td>1.5</td></tr>
+                <tr><td>0.2</td></tr>
               </table>
               <button class="btn btn-outline btn-primary mt-2"
-                onclick="clasificarMuestra([5.8, 2.7, 3.9, 1.2], 'resultado-3')">
+                onclick="clasificarMuestra([5.0,3.4,1.5,0.2], 3)">
                 Clasificar
               </button>
               <div id="resultado-3" class="mt-3 w-full"></div>
@@ -136,143 +133,110 @@
       </div>
     </div>
 
-    <footer th:replace="~{fragments/footer :: foot}"></footer>
-
-    <!-- Script para manejar el envío del formulario -->
     <script>
-      document.addEventListener('DOMContentLoaded', function() {
-        const formLloyd = document.getElementById('form-lloyd');
-        const resultadoDiv = document.getElementById('resultado-lloyd');
-        const resultadoContenido = document.getElementById('resultado-contenido');
+        // Función para clasificar cualquier muestra
+        function clasificarMuestra(muestra, id) {
+            console.log("--- Función clasificarMuestra ---");
+            console.log("Muestra recibida:", muestra);
+            console.log("ID de la muestra:", id);
 
-        // Manejar envío del formulario principal
-        formLloyd.addEventListener('submit', function(e) {
-          e.preventDefault();
-          
-          // Obtener los valores del formulario
-          const muestra = [
-            parseFloat(document.getElementById('x1').value),
-            parseFloat(document.getElementById('x2').value),
-            parseFloat(document.getElementById('x3').value),
-            parseFloat(document.getElementById('x4').value)
-          ];
+            document.getElementById(`resultado-${id}`).innerHTML =
+                '<div class="text-center"><span class="loading loading-spinner text-primary"></span><p>Calculando...</p></div>';
 
-          // Validar que sean números
-          if (muestra.some(isNaN)) {
-            alert('Por favor, introduce valores numéricos válidos.');
-            return;
-          }
+            console.log("Enviando petición POST a /clasificar-lloyd con:", JSON.stringify(muestra));
 
-          // Mostrar indicador de carga
-          resultadoDiv.style.display = 'block';
-          resultadoContenido.innerHTML = '<div class="text-center"><span class="loading loading-spinner text-primary"></span><p>Calculando...</p></div>';
-
-          // Realizar la petición AJAX para clasificar
-          clasificarMuestra(muestra, 'resultado-contenido');
-        });
-
-        function clasificarMuestra(muestra, elementoId) {
-          const elemento = document.getElementById(elementoId);
-          
-          // Mostrar indicador de carga
-          elemento.innerHTML = '<div class="text-center"><span class="loading loading-spinner text-primary"></span><p>Calculando...</p></div>';
-          
-          // Si es el resultado principal, asegurarse de que sea visible
-          if (elementoId === 'resultado-contenido') {
-            resultadoDiv.style.display = 'block';
-          }
-
-          // Realizar la petición AJAX
-          fetch('/clasificar-lloyd', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-              x1: muestra[0],
-              x2: muestra[1],
-              x3: muestra[2],
-              x4: muestra[3]
+            fetch("/clasificar-lloyd", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(muestra),
             })
-          })
-          .then(response => {
-            if (!response.ok) {
-              throw new Error('Error en la respuesta del servidor');
-            }
-            return response.json();
-          })
-          .then(data => {
-            // Mostrar el resultado exactamente como viene del servidor
-            const resultado = `
-              <div class="p-3 rounded bg-base-300">
-                ${data.resultado || 'No se obtuvo resultado de clasificación'}
-              </div>
-            `;
-            
-            elemento.innerHTML = resultado;
-          })
-          .catch(error => {
-            console.error('Error:', error);
-            elemento.innerHTML = '<div class="alert alert-error">Error al clasificar la muestra</div>';
-          });
+            .then(response => {
+                console.log("--- Respuesta del servidor recibida ---");
+                console.log("Estado de la respuesta:", response.status);
+                console.log("¿La respuesta es OK?", response.ok);
+                return response.json();
+            })
+            .then((data) => {
+                console.log("--- Datos JSON recibidos del servidor ---");
+                console.log("Datos:", data);
+                const color = data.resultado === "Iris-setosa" ? "#4CAF50" : "#2196F3";
+
+                const resultado = `
+                    <div class="p-3 rounded" style="background-color: ${color}; color: white;">
+                        <p><strong>Predicción:</strong> ${data.resultado}</p>
+                        <p><strong>Grado pertenencia 1:</strong> ${(data.grado_pertenencia[0] * 100).toFixed(2)}%</p>
+                        <p><strong>Grado pertenencia 2:</strong> ${(data.grado_pertenencia[1] * 100).toFixed(2)}%</p>
+                    </div>
+                `;
+
+                document.getElementById(`resultado-${id}`).innerHTML = resultado;
+                console.log("Resultado mostrado en el elemento con ID:", `resultado-${id}`);
+            })
+            .catch((error) => {
+                console.error("--- Error al clasificar la muestra ---");
+                console.error("Error:", error);
+                document.getElementById(`resultado-${id}`).innerHTML =
+                    '<div class="alert alert-error">Error al clasificar la muestra</div>';
+            });
         }
-      });
 
-      // Función global para las muestras de ejemplo
-      function clasificarMuestra(muestra, elementoId) {
-        const elemento = document.getElementById(elementoId);
-        
-        // Mostrar indicador de carga
-        elemento.innerHTML = '<div class="text-center"><span class="loading loading-spinner text-primary"></span><p>Calculando...</p></div>';
+        document.getElementById("form-lloyd").addEventListener("submit", function (e) {
+            console.log("--- Evento submit del formulario detectado ---");
+            e.preventDefault();
+            const form = e.target;
+            const muestra = [
+                parseFloat(form.x1.value),
+                parseFloat(form.x2.value),
+                parseFloat(form.x3.value),
+                parseFloat(form.x4.value)
+            ];
 
-        // Realizar la petición AJAX
-        fetch('/clasificar-lloyd', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({
-            x1: muestra[0],
-            x2: muestra[1],
-            x3: muestra[2],
-            x4: muestra[3]
-          })
-        })
-        .then(response => {
-          if (!response.ok) {
-            throw new Error('Error en la respuesta del servidor');
-          }
-          return response.json();
-        })
-        .then(data => {
-          // Formato similar al de Bayes
-          const clasificacion = data.resultado || 'No determinado';
-          const clase = clasificacion.includes('Setosa') ? 'Iris-setosa' : 'Iris-versicolor';
-          
-          // Extraer probabilidad si está disponible
-          let probabilidad = '0';
-          const match = clasificacion.match(/(\d+(\.\d+)?)%/); // Buscar porcentaje
-          if (match) {
-            probabilidad = match[1];
-          }
-          
-          let alertColor = clase === 'Iris-setosa' ? '#4CAF50' : '#2196F3';
-          
-          // Generar HTML de resultado
-          const resultado = `
-            <div class="p-3 rounded" style="background-color: ${alertColor}; color: white;">
-              <strong>Clasificación:</strong> ${clase}<br>
-              <strong>Probabilidad:</strong> ${probabilidad}%
-            </div>
-          `;
-          
-          elemento.innerHTML = resultado;
-        })
-        .catch(error => {
-          console.error('Error:', error);
-          elemento.innerHTML = '<div class="alert alert-error">Error al clasificar la muestra</div>';
+            console.log("Valores del formulario:", {
+                x1: form.x1.value,
+                x2: form.x2.value,
+                x3: form.x3.value,
+                x4: form.x4.value
+            });
+            console.log("Muestra a enviar:", muestra);
+
+            document.getElementById("resultado-contenido").innerHTML =
+                '<div class="text-center"><span class="loading loading-spinner text-primary"></span><p>Calculando...</p></div>';
+
+            console.log("Enviando petición POST a /clasificar-lloyd con:", JSON.stringify(muestra));
+
+            fetch("/clasificar-lloyd", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(muestra),
+            })
+            .then((response) => {
+                console.log("--- Respuesta del servidor (formulario) recibida ---");
+                console.log("Estado de la respuesta:", response.status);
+                console.log("¿La respuesta es OK?", response.ok);
+                return response.json();
+            })
+            .then((data) => {
+                console.log("--- Datos JSON recibidos del servidor (formulario) ---");
+                console.log("Datos:", data);
+                const color = data.resultado === "Iris-setosa" ? "#4CAF50" : "#2196F3";
+
+                const resultado = `
+                    <div class="p-3 rounded" style="background-color: ${color}; color: white;">
+                        <p><strong>Predicción:</strong> ${data.resultado}</p>
+                        <p><strong>Grado pertenencia 1:</strong> ${(data.grado_pertenencia[0] * 100).toFixed(2)}%</p>
+                        <p><strong>Grado pertenencia 2:</strong> ${(data.grado_pertenencia[1] * 100).toFixed(2)}%</p>
+                    </div>
+                `;
+                document.getElementById("resultado-contenido").innerHTML = resultado;
+                console.log("Resultado del formulario mostrado en #resultado-contenido");
+            })
+            .catch((error) => {
+                console.error("--- Error al clasificar (formulario) ---");
+                console.error("Error:", error);
+                document.getElementById("resultado-contenido").innerHTML = '<div class="alert alert-error">Error al clasificar la muestra</div>';
+            });
         });
-      }
     </script>
+    <footer th:replace="~{fragments/footer :: foot}"></footer>
   </body>
 </html>

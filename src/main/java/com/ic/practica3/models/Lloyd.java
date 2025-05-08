@@ -103,12 +103,14 @@ public class Lloyd {
     }
 
     public LloydResult clasificarMuestra(double[] muestra) {
+        System.out.println("buenass");
         sol_euclidea euc_setosa = distanciaEuclidea(new Muestra(muestra[0], muestra[1], muestra[2], muestra[3]),
                 matriz);
         sol_euclidea euc_versicolor = distanciaEuclidea(new Muestra(muestra[0], muestra[1], muestra[2], muestra[3]),
                 matriz);
         double total = euc_setosa.valor + euc_versicolor.valor;
         LloydResult ll = new LloydResult();
+        ll.grado_pertenencia = new double[2];
         if (euc_setosa.valor < euc_versicolor.valor) {
             ll.resultado = "Iris-setosa";
         } else {
